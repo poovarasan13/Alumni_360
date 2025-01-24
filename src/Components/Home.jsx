@@ -18,7 +18,7 @@ const Home=()=>{
                    </div>
                    <div className="col-5">
                     <div className="row">
-                         <div className="text color2 display-3 fw-semibold  no-margin">Providing Best Guidence For 
+                         <div className="text  display-3 fw-semibold  no-margin">Providing Best Guidence For 
                             <span className="text-warning"> Bright</span> Future <span className="">..</span>
                         </div>
                     </div>
@@ -31,15 +31,15 @@ const Home=()=>{
                     <div className="row mt-4">
                      <div className="col-4 mx-3">
 
-                        <HomeButton name="Alumni" value="alumni" image={Alumni}/>
+                        <HomeButton name="Alumni" value="alumni" image={Alumni} path="/studentmain" />
                      </div>
                      <div className="col-4 mx-3">
-                     <HomeButton name="Student" value="student" image={Student}/>   
+                     <HomeButton name="Student" value="student" image={Student} path="/studentmain"/>   
                      </div>
                     </div>
                     <div className="row mt-4">
                      <div className="col-7 mx-auto">
-                        <HomeButton2/>
+                        <HomeButton2 name="GET STARTED"/>
                      </div>
                     </div>
                    </div>

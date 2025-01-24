@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import HomeButton2 from ".//HomeButton2";
+import Logo from "./Logo";
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-color border border-light-subtle">
       <div className="container-fluid">
-        <div className="navbar-brand text">Alumni</div>
+        <div className="navbar-brand text ">
+          <Logo/>
+        </div>
 
         <button
           className="navbar-toggler"
@@ -19,7 +23,7 @@ function Navbar() {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav mx-auto">
+          <ul className="navbar-nav mx-auto pb-4">
             <li className="nav-item mx-4 ">
               <Link to="/home" className="nav-link fw-bold fs-5">Home</Link>
             </li>
@@ -33,10 +37,9 @@ function Navbar() {
               <Link to="/volunteers" className="nav-link fw-bold fs-5">Volunteers</Link>
             </li>
           </ul>
-          <div className="d-flex">
-            <button className="btn btn-outline-dark" type="button">
-              Login
-            </button>
+          <div className="d-flex pb-4">
+            
+            <HomeButton2 name="Login"/>
           </div>
         </div>
       </div>

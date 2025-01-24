@@ -1,7 +1,7 @@
 
 
 
-const HomeButton2=()=>{
+const HomeButton2=(props)=>{
     return(
         <>
         <button 
@@ -12,7 +12,7 @@ const HomeButton2=()=>{
             
 
         }}
-        >GET STARTED</button>
+        >{props.name}</button>
         </>
     )
 }

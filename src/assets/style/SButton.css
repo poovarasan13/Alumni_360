@@ -1,0 +1,12 @@
+.color1{
+    background-color: rgb(241,229,240);
+    color:rgb(85,23,94);
+    border:2px solid rgb(85,23,94);
+    /* border-radius: 1px; */
+  }
+  .color2{
+    background-color: rgb(85,23,94);
+    color:white;
+    border:2px solid rgb(85,23,94);
+    /* border-radius: 1px; */
+  }

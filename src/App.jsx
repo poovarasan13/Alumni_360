@@ -1,10 +1,12 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './Components/Home';
-import Volunteers from './Components/Volunteers';
-import Mentor from './Components/Mentor';
 import Forum from './Components/Forum';
-
+import Home from './Components/Home';
+import Mentor from './Components/Mentor';
+import StudentHome from './Components/Student/StudentHome';
+import StudentLogin from './Components/Student/StudentLogin';
+import StudentMain from './Components/Student/StudentMain';
+import Volunteers from './Components/Volunteers';
 function App() {
 
   return (
@@ -15,6 +17,9 @@ function App() {
                    <Route path="/mentor" element={<Mentor/>}/> 
                    <Route path="/forum" element={<Forum/>}/>  
                    <Route path="/volunteers" element={<Volunteers/>}/> 
+                   <Route path="/studentmain" element={<StudentMain/>}/>
+                   <Route path="/studenthome" element={<StudentHome/>}/>
+                   <Route path="/studentlogin" element={<StudentLogin/>}/>
           </Routes>
     </BrowserRouter>
   )
