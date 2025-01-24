@@ -1,0 +1,9 @@
+.homimg{
+        img{
+            height:450px;
+            width:540px;
+        }
+}
+.no-margin {
+    line-height:0.9;
+}

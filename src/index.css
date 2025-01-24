@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+body {
+  background-color:  rgb(241,229,240);
+  font-family: "League Spartan", serif;
+}
+
+.color1{
+  color: rgb(241,229,240);
+}
+.color2{
+  color: rgb(85,23,94);
+}
+
+.color3{
+  color:rbg(187,105,200);
+}
