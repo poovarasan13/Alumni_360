@@ -1,5 +1,19 @@
-
-.bg-color{
-       background-color:  rgb(241,229,240);
-  }
-  
+.bg-color {
+     background-color: rgb(241, 229, 240);
+   }
+   
+   .navbar {
+     padding: 0.5rem 1rem; 
+     font-size: 1rem; 
+     border-radius: 0.5rem; 
+   }
+   
+   .nav-link {
+     font-size: 1.2rem; 
+     padding: 0.25rem 0.5rem; 
+   }
+   
+   .navbar-toggler {
+     padding: 0.25rem 0.5rem; 
+   }
+   

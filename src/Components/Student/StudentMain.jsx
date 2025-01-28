@@ -10,7 +10,7 @@ const StudentMain=()=>{
               <div className=" mt-3 ms-5">
                    <Logo/>                                                             
               </div>
-              <div className="container">
+              <div className="container pt-5">
         <div className="row">
           <div className="col-7"><img alt="Img" src={Img} className="image"/></div>
           <div className="col-5"><div className="container-fluid mt-3">

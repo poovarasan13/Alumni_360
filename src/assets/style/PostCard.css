@@ -1,0 +1,33 @@
+.pro {
+    width: 35px; 
+    height: 35px;
+    object-fit: cover;
+}
+
+.name {
+    display: flex;
+    align-items: left;
+    font-size: 16px; 
+}
+.postt  {
+    height:360px;
+    width: 580px;
+}
+.row.justify-content-start.text-start {
+    display: flex;
+    align-items: center;
+    gap: 0; 
+}
+
+/* .col-1.rounded {
+    padding-right: ; 
+} */
+
+.col-2 {
+    padding-left: 0; 
+}
+
+.share{
+    width:20px;
+    height:20px;
+}

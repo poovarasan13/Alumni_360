@@ -9,8 +9,8 @@ const Home=()=>{
       return(
         <>
              <Navbar/>
-             <div className="container-fluid mt-4">
-                <div className="row justify-content-center ms-5 ">
+             <div className="container-fluid mt-4 pt-5">
+                <div className="row justify-content-center ms-5 pt-4">
                    <div className="col-6 ">
                       <div className="img-fluid homimg ">
                         <img src={Homimg} alt="Homimg" className="homimg"/>

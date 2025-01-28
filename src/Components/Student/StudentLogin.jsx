@@ -23,7 +23,7 @@ const StudentLogin=()=>{
                     {password}
                 </div>
               </div> */}
-              <div className="container">
+              <div className="container pt-4">
         <div className="row">
           <div className="col-7"><img alt="Img" src={Img} className="image1"/></div>
           <div className="col-5">
