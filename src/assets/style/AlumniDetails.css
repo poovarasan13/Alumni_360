@@ -1,0 +1,35 @@
+.alumni{
+    height: 230px;
+    width: 260px;
+    position:absolute;
+    margin-top: -50px;
+}
+.alumnicourse{
+    height:200px;
+    width:250px;
+    /* position:relative;
+    margin-top: -50px; */
+}
+.alumniwebinar{
+    height:200px;
+    width:295px;
+    /* position:relative;
+    margin-top: -50px; */
+}
+.alumniinternship{
+    height:140px;
+    width:295px;
+    /* position:relative;
+    margin-top: -50px; */
+}
+.btn-colorr{
+    background-color: rgb(75,9,84);
+    color:white;
+    /* font-size: 3.2rem;  */
+    font-weight: bold; 
+    text-align: center; 
+}
+.btn-colorr:hover{
+    background-color: rgb(75,9,84);
+    color:white;
+}

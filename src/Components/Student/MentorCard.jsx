@@ -12,8 +12,11 @@ const MentorCard=(props)=>{
             <div className="card card-color rounded-3 border border-2" style={{width:"15rem"}}>
                 <div className="card-body">
                 <div className="row">
+                   
                 <div className="col">
+                <Link to="/alumnidetails">
                     <img src={props.image} alt="profile" className="img-p"/>
+                    </Link>
                 </div>
                 <div className="text h4 text-center text-color mt-2 fw-bold " >
                     {props.name}
@@ -21,6 +24,7 @@ const MentorCard=(props)=>{
                 <div className="text h6 fw-bold ">
                       {props.company} 
                 </div>
+
                  <div className="row justify-content-center">
                     <div className="col-3">
                         <Link to={props.gmail}>

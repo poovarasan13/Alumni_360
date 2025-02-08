@@ -24,22 +24,22 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto">
             <li className="nav-item mx-4">
-              <Link to="/home" className="nav-link fw-medium fs-7">
+              <Link to="/home" className="nav-link fw-medium fs-7 fw-bold">
                 Home
               </Link>
             </li>
             <li className="nav-item mx-4">
-              <Link to="/mentor" className="nav-link fw-medium fs-7">
+              <Link to="/mentor" className="nav-link fw-medium fs-7 fw-bold">
                 Mentors
               </Link>
             </li>
             <li className="nav-item mx-4">
-              <Link to="/forum" className="nav-link fw-medium fs-7">
+              <Link to="/forum" className="nav-link fw-medium fs-7 fw-bold">
                 Forum
               </Link>
             </li>
             <li className="nav-item mx-4">
-              <Link to="/volunteers" className="nav-link fw-medium fs-7">
+              <Link to="/volunteers" className="nav-link fw-medium fs-7 fw-bold">
                 Volunteers
               </Link>
             </li>
