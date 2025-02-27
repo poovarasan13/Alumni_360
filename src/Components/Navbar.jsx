@@ -29,7 +29,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item mx-4">
-              <Link to="/mentor" className="nav-link fw-medium fs-7 fw-bold">
+              <Link to="/studenthome" className="nav-link fw-medium fs-7 fw-bold">
                 Mentors
               </Link>
             </li>

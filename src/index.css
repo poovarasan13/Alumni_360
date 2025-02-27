@@ -4,7 +4,13 @@ body {
   font-family: "League Spartan", serif;
   /* color:red;  */
 }
-
+.white{
+  background-color: white;
+}
+.bg1{
+  background-color: rgb(249,248,249                                               );
+  /* color:white */
+}
 .color1{
   color: rgb(241,229,240);
 }
@@ -18,4 +24,12 @@ body {
 
 .form-design{
   background-color: rgb(250, 238, 252);
+}
+
+.bg2{
+  background-color: rgb(125,18,153);
+}
+
+.btn1{
+  background-color: rgb(176,163,162);
 }

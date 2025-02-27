@@ -31,7 +31,7 @@ const Home=()=>{
                     <div className="row mt-4">
                      <div className="col-4 mx-3">
 
-                        <HomeButton name="Alumni" value="alumni" image={Alumni} path="/studentmain" />
+                        <HomeButton name="Alumni" value="alumni" image={Alumni} path="/alumnipage" />
                      </div>
                      <div className="col-4 mx-3">
                      <HomeButton name="Student" value="student" image={Student} path="/studentmain"/>   

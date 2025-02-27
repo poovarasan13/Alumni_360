@@ -70,7 +70,7 @@ const StudentHome=()=>
 
                 </div>
            </div>
-               <AlumniDetails/>
+               {/* <AlumniDetails/> */}
            
            <Footer/>
         </>

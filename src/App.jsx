@@ -8,6 +8,7 @@ import StudentLogin from './Components/Student/StudentLogin';
 import StudentMain from './Components/Student/StudentMain';
 import Volunteers from './Components/Volunteers';
 import AlumniDetails from './Components/Student/AlumniDetails';
+import AlumniPage from './Components/Alumni/AlumniPage';
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
                    <Route path="/studenthome/*" element={<StudentHome/>}/>
                    <Route path="/studentlogin" element={<StudentLogin/>}/>
                    <Route path="/alumnidetails/*" element={<AlumniDetails/>}/>
+                   <Route path="/alumnipage/*" element={<AlumniPage/>}/>
           </Routes>
     </BrowserRouter>
   )

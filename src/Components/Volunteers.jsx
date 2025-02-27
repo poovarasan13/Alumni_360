@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import VolunteerPage from "./Volunteers/VolunteerPage";
 
 
 
@@ -7,6 +8,7 @@ const Volunteers=()=>{
        
         <>
          <Navbar/>
+         <VolunteerPage/>
         </>
     )
 }

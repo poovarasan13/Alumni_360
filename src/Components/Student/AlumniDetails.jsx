@@ -28,17 +28,17 @@ const AlumniDetails=()=>{
 
             <div className="row mt-4 pb-5 ">
                          <div className="col-2">
-                            <Link className="btn btn-sm px-4 py-1 fs-6 rounded-4 btn-colorr" to="/studenthome/alumnnicourse">
+                            <Link className="btn btn-sm px-4 py-1 fs-6 rounded-4 btn-colorr" to="/alumnidetails/alumnnicourse">
                                    Courses
                             </Link>
                          </div>
                          <div className="col-2">
-                            <Link className="btn btn-sm px-4 py-1 fs-6 rounded-4  btn-colorr" to="/studenthome/alumniwebinar">
+                            <Link className="btn btn-sm px-4 py-1 fs-6 rounded-4  btn-colorr" to="/alumnidetails/alumniwebinar">
                                    Webinars
                             </Link>
                          </div>
                          <div className="col-2">
-                            <Link className="btn btn-sm px-4 py-1 fs-6 rounded-4   btn-colorr " to="/studenthome/alumniintership">
+                            <Link className="btn btn-sm px-4 py-1 fs-6 rounded-4   btn-colorr " to="/alumnidetails/alumniintership">
                                    Interships
                             </Link>
                          </div>
@@ -54,6 +54,7 @@ const AlumniDetails=()=>{
                 </Routes>
                 </div>
              </div>
+             
         </>
     )
 }
