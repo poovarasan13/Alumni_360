@@ -13,7 +13,7 @@ function AlumniPost() {
     return (
        <>
 
-<div className="row px-5 mx-5 mb-4 mt-3">
+  <div className="row px-5 mx-5 mb-4 mt-3">
                     <div className="col-3 ">
                         <div className="card rounded-0">
                             <img src={CardImage} alt="alumniPage" className="img img-fluid px-3 pt-3" style={{height:"180px",width:"auto"}}/>

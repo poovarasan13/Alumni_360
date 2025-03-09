@@ -31,16 +31,16 @@ const Home=()=>{
                     <div className="row mt-4">
                      <div className="col-4 mx-3">
 
-                        <HomeButton name="Alumni" value="alumni" image={Alumni} path="/alumnipage" />
+                        <HomeButton name="Alumni" value="alumni" image={Alumni} path="/alumnilogin" />
                      </div>
                      <div className="col-4 mx-3">
                      <HomeButton name="Student" value="student" image={Student} path="/studentmain"/>   
                      </div>
                     </div>
                     <div className="row mt-4">
-                     <div className="col-7 mx-auto">
+                     {/* <div className="col-7 mx-auto">
                         <HomeButton2 name="GET STARTED"/>
-                     </div>
+                     </div> */}
                     </div>
                    </div>
                 </div>
