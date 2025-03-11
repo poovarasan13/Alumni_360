@@ -2,7 +2,12 @@ import Logo from "../Logo";
 import Img from "../../assets/images/StudentMain.png";
 import SButton from "./SButton";
 import  "../../assets/style/StudentMain.css";
+import { useNavigate } from "react-router-dom";
 const StudentMain=()=>{
+  const navigate=useNavigate();
+  const handleLogin=()=>{
+    navigate('/studentlogin');
+  }
     return(
         <>
        
@@ -29,7 +34,7 @@ const StudentMain=()=>{
                                   <div className="text">Get Started?</div></div>
                               </div>
                               
-                              <SButton name="Login" color="color2" path="/studentlogin"/>
+                              <SButton type='submit' name="Login" color="color2" onClick={handleLogin}/>
                               {/* <SButton name="Sign up" color="color1"/>  */}
                               
 

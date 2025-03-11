@@ -9,7 +9,7 @@ const Forum=()=>{
         <>
         <Navbar/>
             <div className="container-fluid pt-5">
-                <div className="row text-center pt-2">
+                <div className="row text-center pt-2 ">
                     <div className="col-2 bg-light">
                         <ForumSideBar/>
                     </div>

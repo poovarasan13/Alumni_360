@@ -43,10 +43,10 @@ const AlumniLogin = () => {
                             <div className="row mt-2">
                                 <div className="col mx-4">
                                     <div className="input-group">
-                                    <div class="input-group-text">
+                                    <div className="input-group-text">
                                         <img src={Profile} alt="username" className="profile" />
                                     </div>
-                        <input type="text" class="form-control"  placeholder="Username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
+                        <input type="text" className="form-control"  placeholder="Username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
 
                                     </div>
                                 </div>
@@ -55,10 +55,10 @@ const AlumniLogin = () => {
                             <div className="row mt-4">
                                 <div className="col mx-4">
                                     <div className="input-group">
-                                    <div class="input-group-text">
+                                    <div className="input-group-text">
                                         <img src={Password} alt="password" className="password" />
                                     </div>
-                                <input type="password" class="form-control"  placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                                <input type="password" className="form-control"  placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
 
                                     </div>
                                 </div>

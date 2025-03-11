@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "../assets/style/Navbar.css";
 import HomeButton2 from "./HomeButton2";
 import Logo from "./Logo"
+import UserContext from "../Context/Student";
 function Navbar() {
+   const{name,mobile}=useContext(UserContext);
   return (
     <nav className="navbar navbar-expand-lg bg-color fixed-top custom-navbar">
       <div className="container-fluid">
@@ -44,9 +46,16 @@ function Navbar() {
               </Link>
             </li>
           </ul>
+          {name.length===0 &&
           <div className="d-flex">
               <HomeButton2 name="Login"/>
           </div>
+           }
+           {name.length!==0 &&
+           <div className="d-flex">
+                {name} {mobile}
+       </div>
+           }
         </div>
       </div>
     </nav>

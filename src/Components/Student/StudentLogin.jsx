@@ -4,11 +4,42 @@ import SButton from "./SButton";
 import  "../../assets/style/StudentLogin.css";
 import Profile from "../../assets/images/Profile.png"
 import Password from "../../assets/images/Password.png"
-import { useState } from "react";
-
+import { useState ,useContext} from "react";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../../Context/Student";
+// import dotenv from 'dotenv';
 const StudentLogin=()=>{
-    const[username,setUsername]=useState("");
+    // dotenv.config();
+    const url = import.meta.env.URL;
+    const {name,setName,mobile,setMobile}=useContext(UserContext);
+    const[rollno,setRollno]=useState("");
     const[password,setPassword]=useState("");
+    const navigate=useNavigate();
+     const handleLogin = async (e)=>{
+        e.preventDefault();
+        console.log("enter login");
+        try{
+          const response= await fetch(`${url}/login`,{
+            method:"POST",
+            headers:{'Content-Type': 'application/json'},
+            body:JSON.stringify({rollno,password})
+          })
+            const data= await response.json();
+             console.log(data);
+             if(data.success)
+             {
+             console.log("Login Success");
+             setName(data.name);
+             setMobile(data.mobile);
+             navigate('/studenthome');
+             }
+        }
+        catch(err)
+        {
+            console.log("Error in Login",err.message);
+        }
+     }
+    
     return(
         <>
          
@@ -32,6 +63,7 @@ const StudentLogin=()=>{
                     <div className="col-12 ">
                           <div className="card pb-5 rounded-4 form-design">
                             <div className="card-body ">
+                                <form onSubmit={handleLogin}>
                               <div className="row ms-3 pt-3">
                                          <div className="text fw-bold h4">Hello!</div>
                               </div>
@@ -42,10 +74,10 @@ const StudentLogin=()=>{
                             <div className="row mt-2">
                                 <div className="col mx-4">
                                     <div className="input-group">
-                                    <div class="input-group-text">
-                                        <img src={Profile} alt="username" className="profile" />
+                                    <div className="input-group-text">
+                                        <img src={Profile} alt="rollno" className="profile" />
                                     </div>
-                        <input type="text" class="form-control"  placeholder="Username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
+                        <input type="text" className="form-control"  placeholder="Rollno" value={rollno} onChange={(e)=>setRollno(e.target.value)}/>
 
                                     </div>
                                 </div>
@@ -54,10 +86,10 @@ const StudentLogin=()=>{
                             <div className="row mt-4">
                                 <div className="col mx-4">
                                     <div className="input-group">
-                                    <div class="input-group-text">
+                                    <div className="input-group-text">
                                         <img src={Password} alt="password" className="password" />
                                     </div>
-                                <input type="password" class="form-control"  placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                                <input type="password" className="form-control"  placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
 
                                     </div>
                                 </div>
@@ -71,9 +103,9 @@ const StudentLogin=()=>{
                             </div>}
                             
                               
-                              <SButton name="Login" color="color2" path="/studenthome"/>
+                              <SButton className="btn" name="Login" type='submit' color="color2" />
                               
-                              
+                              </form>
 
                             </div>
                           </div>
