@@ -10,7 +10,9 @@ import UserContext from "../../Context/Student";
 // import dotenv from 'dotenv';
 const StudentLogin=()=>{
     // dotenv.config();
-    const url = import.meta.env.URL;
+    const url = import.meta.env.VITE_HOST_URL;
+    console.log(import.meta.env);
+    console.log("url"+ url);
     const {name,setName,mobile,setMobile}=useContext(UserContext);
     const[rollno,setRollno]=useState("");
     const[password,setPassword]=useState("");
