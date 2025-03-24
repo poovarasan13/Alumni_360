@@ -9,15 +9,17 @@
 // import Volunteers from './Components/Volunteers';
 // import AlumniDetails from './Components/Student/AlumniDetails';
 // import AlumniPage from './Components/Alumni/AlumniPage';
+import AlumniListProvider from './Context/Alumni/AlumniListProvider';
 import UserListProvider from './Context/Student/UserListProvider';
 import AppNavigation from './Routes/AppNavigation';
 function App() {
 
   return (
-    <>
-      <UserListProvider>
-               <AppNavigation/>
-      </UserListProvider>
+    <><AlumniListProvider>
+                  <UserListProvider>
+                           <AppNavigation/>
+                  </UserListProvider>
+      </AlumniListProvider>
     </>
   )
 }

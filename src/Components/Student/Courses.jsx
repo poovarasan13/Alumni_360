@@ -1,72 +1,58 @@
+import { useEffect, useState } from "react";
 import "../../assets/style/AlumniDetails.css";
-import courses from "../../assets/images/onlinecourses.png";
-import {useNavigate} from "react-router-dom"
-const AlumniCourses=[
-    {
-        id:1,
-        company:"Google",
-        course:"Google Data Analystics",
-        img:courses,
-        link:"https://getbootstrap.com/docs/4.0/utilities/flex/"
+import coursesImg from "../../assets/images/onlinecourses.png";
 
-    },
-    {
-        id:2,
-        company:"IBM",
-        course:" Data Science",
-        img:courses,
-        link:""
-    },
-    {
-        id:3,
-        company:"Meta",
-        course:"React Js",
-        img:courses,
-        link:""
-    },
-]
+const Courses = ({ posts }) => {
+    const [courses, setCourses] = useState([]);
 
-const Courses=()=>{
-    const navigate=useNavigate();
-    const handleNavigate=(c)=>{
-        if(c.link)
-        {
-            window.open(c.link,"_blank");
-        }
-        else{
+    // useEffect(() => {
+    //     if (rollno) {
+    //         fetch(`http://localhost:9000/courses/list/${rollno}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 console.log("Fetched Courses:", data);
+    //                 setCourses(data);
+    //             })
+    //             .catch(error => console.error("Error fetching courses:", error));
+    //     }
+    // }, [rollno]);
+
+    const handleNavigate = (course) => {
+        if (course.link) {
+            window.open(course.link, "_blank");
+        } else {
             alert("No link available");
         }
-    }
-    return(
-        <>
-        <div className="row justify-content-center">
-        {AlumniCourses.map((c,index)=>
-        (
+    };
 
-                     <div className="col-4 " key={index}>
-                        <div className="card " style={{width:"20rem"}}>
-                        <div className="d-flex justify-content-center">
-                        <img src={c.img} className="img img-fluid alumnicourse card-img-top" alt={index}/>
-                          </div>
-                            <div className="card-body ">
-                               <div className="card-text fw-light">
-                                {c.company}
-                               </div>
-                               <div className="card-text fw-bolder ">
-                                {c.course}
-                               </div>
-                               <div className="card-text justify-content-center  d-flex ">
-                                <div className="btn btn-success btn-sm" onClick={()=>handleNavigate(c)}>Visit</div>
-                               </div>
+    return (
+        <div className="row justify-content-center">
+            {posts.length > 0 ? (
+                posts.map((course, index) => (
+                    <div className="col-4" key={index}>
+                        <div className="card" style={{ width: "16rem" }}>
+                            <div className="d-flex justify-content-center">
+                                <img 
+                                    src={course.image ? `http://localhost:9000${course.image}` : webinarImage} 
+                                    className="img img-fluid alumnicourse card-img-top" 
+                                    alt={course.course} 
+                                />
+                            </div>
+                            <div className="card-body">
+                                <div className="card-text fw-light">{course.company}</div>
+                                <div className="card-text fw-bolder">{course.course}</div>
+                                <div className="card-text justify-content-center d-flex">
+                                    <button className="btn btn-success btn-sm" onClick={() => handleNavigate(course)}>Visit</button>
+                                </div>
                             </div>
                         </div>
-                     </div>
+                    </div>
+                ))
+            ) : (
+                <p>No courses available.</p>
+            )}
+        </div>
+    );
+};
 
-
-        ))};
-            </div> 
-       
-        </>
-    )
-}
 export default Courses;

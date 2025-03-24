@@ -11,10 +11,10 @@ import UserContext from "../../Context/Student";
 const StudentLogin=()=>{
     // dotenv.config();
     const url = import.meta.env.VITE_HOST_URL;
-    console.log(import.meta.env);
+    // console.log(import.meta.env);
     console.log("url"+ url);
-    const {name,setName,mobile,setMobile}=useContext(UserContext);
-    const[rollno,setRollno]=useState("");
+    const {name,setName,mobile,setMobile,setRollno}=useContext(UserContext);
+    const[roll,setRoll]=useState("");
     const[password,setPassword]=useState("");
     const navigate=useNavigate();
      const handleLogin = async (e)=>{
@@ -24,16 +24,21 @@ const StudentLogin=()=>{
           const response= await fetch(`${url}/login`,{
             method:"POST",
             headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify({rollno,password})
+            body:JSON.stringify({roll,password})
           })
             const data= await response.json();
              console.log(data);
              if(data.success)
              {
              console.log("Login Success");
-             setName(data.name);
-             setMobile(data.mobile);
+             setName(data.student.name);
+             setMobile(data.student.mobile);
+             setRollno(data.student.rollno);
              navigate('/studenthome');
+             }
+             if(data.alumni===true)
+             {
+              alert(data.message);
              }
         }
         catch(err)
@@ -79,7 +84,7 @@ const StudentLogin=()=>{
                                     <div className="input-group-text">
                                         <img src={Profile} alt="rollno" className="profile" />
                                     </div>
-                        <input type="text" className="form-control"  placeholder="Rollno" value={rollno} onChange={(e)=>setRollno(e.target.value)}/>
+                        <input type="text" className="form-control"  placeholder="Rollno" value={roll} onChange={(e)=>setRoll(e.target.value)}/>
 
                                     </div>
                                 </div>

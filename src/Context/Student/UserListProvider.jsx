@@ -6,10 +6,10 @@ const UserListProvider = (props) => {
 
     const [name,setName]=useState('');
     const[mobile,setMobile]=useState('');
-     const[password,setPassword]=useState('');
+     const[rollno,setRollno]=useState('');
   return (
     <Context.Provider 
-    value={{name,setName,mobile,setMobile,password,setPassword}}>
+    value={{name,setName,mobile,setMobile ,rollno,setRollno}}>
       {props.children}
     </Context.Provider>
   )

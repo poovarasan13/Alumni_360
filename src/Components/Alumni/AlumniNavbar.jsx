@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "../../assets/style/Navbar.css";
 import HomeButton2 from "../HomeButton2";
 import Logo from "../Logo"
+import AlumniContext from "../../Context/Alumni";
 function AlumniNavbar() {
+  const {alumniData}=useContext(AlumniContext);
+  // console.log(alumniData);
   return (
     <nav className="navbar navbar-expand-lg bg-color fixed-top custom-navbar">
       <div className="container-fluid">
@@ -46,7 +49,7 @@ function AlumniNavbar() {
             </li>
           </ul>
           <div className="d-flex">
-              <HomeButton2 name="Login"/>
+            {alumniData.name}
           </div>
         </div>
       </div>

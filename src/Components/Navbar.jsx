@@ -5,7 +5,7 @@ import HomeButton2 from "./HomeButton2";
 import Logo from "./Logo"
 import UserContext from "../Context/Student";
 function Navbar() {
-   const{name,mobile}=useContext(UserContext);
+   const{name,rollno}=useContext(UserContext);
   return (
     <nav className="navbar navbar-expand-lg bg-color fixed-top custom-navbar">
       <div className="container-fluid">
@@ -53,7 +53,7 @@ function Navbar() {
            }
            {name.length!==0 &&
            <div className="d-flex">
-                {name} {mobile}
+                {name} {rollno}
        </div>
            }
         </div>
