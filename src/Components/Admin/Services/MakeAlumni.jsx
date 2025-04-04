@@ -1,22 +1,7 @@
-import React, { useState } from 'react';
+import React,{useState} from 'react'
 
-const AddStudents = () => {
-  const [batch, setBatch] = useState('');
-  const [file, setFile] = useState(null);
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleUpload = () => {
-    if (!batch || !file) {
-      alert('Please select a batch and upload a file.');
-      return;
-    }
-    alert(`Uploading file: ${file.name} for batch: ${batch}`);
-
-  };
-
+const MakeAlumni = () => {
+     const [batch, setBatch] = useState('');
   return (
     <div className="container pt-5 mt-5 d-flex justify-content-center">
       <div className="col-md-6">
@@ -43,29 +28,14 @@ const AddStudents = () => {
                
               </div>
 
-              <div className="mb-3">
-                <label className="form-label fw-bold">Upload File</label>
-                <input 
-                  type="file" 
-                  className="form-control" 
-                  name="file" 
-                  onChange={handleFileChange} 
-                />
-                <div className="row justify-content-center">
-                  <div className="col-11">
-                  <small className="text-justify  text-danger">Note:CSV File Format should be name, rollno, batch, department, alumni, mobile, password</small>
-                  </div>
-                </div>
-                
-              </div>
 
               <div className="text-center">
                 <button 
                   type="button" 
                   className="btn btn-primary btn-sm" 
-                  onClick={handleUpload}
+                //   onClick={}
                 >
-                  Upload
+                  Update
                 </button>
               </div>
             </form>
@@ -73,7 +43,7 @@ const AddStudents = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddStudents;
+export default MakeAlumni

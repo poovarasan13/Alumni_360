@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import AlumniContext from "../../Context/Alumni";
 
 const AlumniInternship = () => {
   const [internships, setInternships] = useState([]);
@@ -6,9 +7,11 @@ const AlumniInternship = () => {
   const [company, setCompany] = useState("");
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
+  const [link,setLink]=useState('');
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
-
+ const {alumniData}=useContext(AlumniContext);
+ const rollno=alumniData.rollno;
   // Fetch Internships
   useEffect(() => {
     fetchInternships();
@@ -16,7 +19,7 @@ const AlumniInternship = () => {
 
   const fetchInternships = async () => {
     try {
-      const response = await fetch("http://localhost:9000/internships/list");
+      const response = await fetch(`http://localhost:9000/internships/list/${rollno}`);
       const data = await response.json();
       setInternships(data);
     } catch (error) {
@@ -36,7 +39,9 @@ const AlumniInternship = () => {
     formData.append("company", company);
     formData.append("duration", duration);
     formData.append("description", description);
-    if (image) formData.append("image", image);
+    formData.append("rollno",rollno);
+    formData.append("link",link)
+        if (image) formData.append("image", image);
 
     const url = editId
       ? `http://localhost:9000/internships/update/${editId}`
@@ -90,6 +95,7 @@ const AlumniInternship = () => {
     setDuration(internship.duration);
     setDescription(internship.description);
     setEditId(internship._id);
+    setLink(internship.link);
     setImage(null);
     document.getElementById("openModalBtn").click(); // Open modal for editing
   };
@@ -102,6 +108,7 @@ const AlumniInternship = () => {
     setDescription("");
     setEditId(null);
     setImage(null);
+    setLink('');
     document.getElementById("closeModal").click(); // Close modal after submit
   };
 
@@ -161,6 +168,13 @@ const AlumniInternship = () => {
                 type="file"
                 className="form-control mb-2"
                 onChange={(e) => setImage(e.target.files[0])}
+              />
+               <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Link"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
               />
             </div>
             <div className="modal-footer">

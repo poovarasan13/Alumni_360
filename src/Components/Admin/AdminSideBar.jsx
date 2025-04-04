@@ -7,7 +7,7 @@ const AdminSideBar = () => {
          <div className="row">
             <Link className='list-group-item list-group-item-action h6 p-3' to='/admin/dashboard'>Dashboard</Link>
             <Link className='list-group-item list-group-item-action h6 p-3' to='/admin/addstudents'>Add Students</Link>
-            <Link className='list-group-item list-group-item-action h6 p-3' to='/admin/dashboard'>Make Alumni</Link>
+            <Link className='list-group-item list-group-item-action h6 p-3' to='/admin/makestudents'>Make Alumni</Link>
             <Link className='list-group-item list-group-item-action h6 p-3' to='/admin/addstudents'>Setting</Link>
             
          </div>

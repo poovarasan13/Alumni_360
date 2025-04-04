@@ -3,6 +3,7 @@ import AdminSideBar from './AdminSideBar'
 import { Route, Routes } from 'react-router-dom'
 import Dashboard from './Services/Dashboard'
 import AddStudents from './Services/AddStudents'
+import MakeAlumni from './Services/MakeAlumni'
 
 const AdminPage = () => {
   return (
@@ -17,6 +18,7 @@ const AdminPage = () => {
                         <Route path="/" element={<Dashboard/>}/>
                         <Route path="/dashboard" element={<Dashboard/>}/>
                         <Route path="/addstudents" element={<AddStudents/>}/>
+                        <Route path='/makestudents' element={<MakeAlumni/>}/>
 
                     </Routes>
 
