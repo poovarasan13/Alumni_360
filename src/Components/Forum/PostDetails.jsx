@@ -1,142 +1,143 @@
-import { useLocation } from "react-router-dom";
-import "../../assets/style/PostDetails.css";
-import { useState } from "react";
-import Image from "../../assets/images/Person.png";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import PostComment from "./PostComment";
-const PostDetails = () => {
-    const location = useLocation();
-    const { Image, name, content, imgPost, para } = location.state || {};
+import "../../assets/style/PostCard.css";
 
-    if (!location.state) {
-        return <div>Invalid data or missing state!</div>;
-    }
-   const[Login,setLogin]=useState(false);
-   const[comment,setComment]=useState("");
+function PostDetails() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [forum, setForum] = useState(null);
+  const [comment, setComment] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Simulated login
+  const [userName, setUserName] = useState("Guest");
+  const [userImage, setUserImage] = useState("https://i.ibb.co/album/default-user.png");
 
-   const comments=[
-    {
-      pImage:Image,
-      pName:"Siranjeevi",
-      pComment:"It's good but not work as well",
-    },
-    {
-        pImage:Image,
-        pName:"Poovarasan",
-        pComment:"It's good but not work as well",
-      },
-      {
-        pImage:Image,
-        pName:"Vishwa",
-        pComment:"It's good but not work as well",
-      },
-      {
-        pImage:Image,
-        pName:"Siranjeevi",
-        pComment:"It's good but not work as well",
-      },
-      {
-        pImage:Image,
-        pName:"Logesh",
-        pComment:"It's good but not work as well",
-      },
-      {
-        pImage:Image,
-        pName:"Siranjeevi",
-        pComment:"It's good but not work as well",
-      },
-      {
-        pImage:Image,
-        pName:"Siranjeevi",
-        pComment:"It's good but not work as well",
-      },
- ]
-    return (
-        <>
-           <div className="container">
-           <div className="row ms-4 py-3">
-                <div className="col-9">
-                    <div className="card rounded-4" >
-                        <div className="card-body" >
-                            <div className="row justify-content-start ">
-                                <div className="col-1">
-                                <i className="bi bi-arrow-left-circle" style={{ fontSize: "2rem", cursor: "pointer" }}></i>
-                                </div>
-                                <div className="col-1 rounded "><img src={Image} alt="image" className="pro"/>  
-                                </div>
-                                <div className="col-2 pt-2 ">
-                                    <div className="name h5">{name}</div>
-                                </div>
-                            </div>
-                            <div className="row mt-3">
-                                <div className="col">
-                                    <div className="text-start h5 fw-bold">
-                                      {content}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="text text-start fw-light">
-                                        {para}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row ">
-                               <div className="col ">
-                                <img src={imgPost} alt="post" className="post rounded-3" ></img>
-                                </div>
-                            </div>
-                            <div className="row mt-3">
-                                <div className="col-1 text-end">
-                                <i className="bi bi-share-fill "></i>
-                                    {/* <img src={share} alt="share" className="share"/> */}
-                                </div>
-                                <div className="col-1 text">
-                                <i className="bi bi-chat-left"></i>
-                                </div>
-                            </div>
-                            <div className="row">
+  useEffect(() => {
+    axios
+      .get(`http://localhost:9000/forums/${id}`)
+      .then((res) => setForum(res.data))
+      .catch((err) => console.error("Error fetching forum post:", err));
+  }, [id]);
 
-                                    {Login&&
-                                                            <div className="col-2">
-                                    <div className="btn btn-sm btn-primary rounded-4 mt-3">
-                                        <div className="text">Add Comment</div>
-                                    </div>
-                                    </div> }
+  const handleAddComment = () => {
+    const newComment = {
+      pName: userName,
+      pComment: comment,
+      pImage: userImage,
+    };
 
-                                    { !Login&&
-                                    <div className="col">
-                                    <form>
-                                        <div className="row justify-content-start">
-                                            <div className="col-12">
-                                            <div className="mb-3">
-                                        <input type="email" className="form-control border-2" value={comment} onChange={(e)=>setComment(e.target.value)} style={{}} />
-                                    </div>  
-                                            </div>
-                                        </div>
-                                        <div className="row justify-content-start">
-                                            <div className="col-1">
-                                                <div className="btn btn-sm btn-primary">Comment</div></div></div>   
-                                    </form>
+    axios
+      .post(`http://localhost:9000/forums/${id}/comments`, newComment)
+      .then((res) => {
+        setForum(res.data);
+        setComment("");
+      })
+      .catch((err) => console.error("Error adding comment:", err));
+  };
 
-                                    </div>
-                                    }
+  if (!forum) return <p>Loading...</p>;
 
-                                    </div>
-                                    {comments.map((comment,index)=>
-                                    (
-                                        <PostComment key={index} {...comment}/>
-                                    ))}
-                                          {/* <PostComment/> */}
-
-                        </div>
-                    </div>
-                    
+  return (
+    <div className="container mt-4">
+      <div className="row ms-4 py-3">
+        <div className="col-9">
+          <div className="card rounded-4">
+            <div className="card-body">
+              <div className="row justify-content-start">
+                <div className="col-1">
+                  <i
+                    className="bi bi-arrow-left-circle"
+                    style={{ fontSize: "2rem", cursor: "pointer" }}
+                    onClick={() => navigate(-1)}
+                  ></i>
                 </div>
+                <div className="col-1 rounded">
+                  <img src={forum.avatar || forum.image} alt="author" className="pro" />
+                </div>
+                <div className="col-2 pt-2">
+                  <div className="name h5">{forum.name}</div>
+                </div>
+              </div>
+
+              <div className="row mt-3">
+                <div className="col">
+                  <div className="text-start h5 fw-bold">{forum.content}</div>
+                </div>
+              </div>
+
+              {forum.para && (
+                <div className="row">
+                  <div className="col">
+                    <div className="text text-start fw-light">{forum.para}</div>
+                  </div>
+                </div>
+              )}
+
+              {forum.imgPost && (
+                <div className="row">
+                  <div className="col">
+                  <img src={`http://localhost:9000/uploads/${forum.imgPost}`} alt="post" className="postt rounded-3" />
+                  </div>
+                </div>
+              )}
+
+              <div className="row mt-3">
+                <div className="col-1 text-end">
+                  <i className="bi bi-share-fill"></i>
+                </div>
+                <div className="col-1 text">
+                  <i className="bi bi-chat-left"></i>
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                {isLoggedIn ? (
+                  <div className="col-2">
+                    <div className="btn btn-sm btn-primary rounded-4">
+                      <div className="text">Add Comment</div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="col">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleAddComment();
+                      }}
+                    >
+                      <div className="mb-3">
+                        <input
+                          type="text"
+                          className="form-control border-2"
+                          placeholder="Write your comment here..."
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        />
+                      </div>
+                      <div className="row justify-content-start">
+                        <div className="col-1">
+                          <button className="btn btn-sm btn-primary" type="submit">
+                            Comment
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-4">
+                {forum.comments.map((c, i) => (
+                  <PostComment key={i} {...c} />
+                ))}
+              </div>
             </div>
-           </div>
-        </>
-    );
-};
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default PostDetails;

@@ -28,7 +28,7 @@ const Forum=()=>{
 
 
 
-                        <Route path="/postdetails" element={<PostDetails/>}/>
+                        <Route path="/:id" element={<PostDetails/>}/>
                     </Routes>
                     </div>
                 </div>

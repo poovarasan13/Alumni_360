@@ -46,14 +46,10 @@ function Navbar() {
               </Link>
             </li>
           </ul>
-          {name.length===0 &&
-          <div className="d-flex">
-              <HomeButton2 name="Login"/>
-          </div>
-           }
+   
            {name.length!==0 &&
            <div className="d-flex">
-                {name} {rollno}
+                {name} 
        </div>
            }
         </div>
