@@ -13,7 +13,7 @@ const StudentMain=()=>{
        
       
               <div className=" mt-3 ms-5">
-                   <Logo/>                                                             
+                   <Logo/>
               </div>
               <div className="container pt-5">
         <div className="row">

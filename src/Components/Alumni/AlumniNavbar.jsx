@@ -6,11 +6,16 @@ import Logo from "../Logo";
 import AlumniContext from "../../Context/Alumni";
 
 function AlumniNavbar() {
-  const { alumniData } = useContext(AlumniContext);
+  const { alumniData ,setAlumniData } = useContext(AlumniContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("alumniData");
+    setAlumniData( prev=>({
+      ...prev,alumni:false
+    }))
+   
     navigate("/home");
   };
 

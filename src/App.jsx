@@ -10,15 +10,18 @@
 // import AlumniDetails from './Components/Student/AlumniDetails';
 // import AlumniPage from './Components/Alumni/AlumniPage';
 import AlumniListProvider from './Context/Alumni/AlumniListProvider';
+import MentorProvider from './Context/Alumni/MentorProvider';
 import UserListProvider from './Context/Student/UserListProvider';
 import AppNavigation from './Routes/AppNavigation';
 function App() {
 
   return (
     <><AlumniListProvider>
-                  <UserListProvider>
-                           <AppNavigation/>
-                  </UserListProvider>
+             <MentorProvider>                
+                    <UserListProvider>
+                             <AppNavigation/>
+                   </UserListProvider>
+             </MentorProvider>
       </AlumniListProvider>
     </>
   )

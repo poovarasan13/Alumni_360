@@ -8,7 +8,7 @@ import HomeButton2 from "./HomeButton2";
 const Home=()=>{
       return(
         <>
-             <Navbar/>
+             {/* <Navbar/> */}
              <div className="container-fluid mt-4 pt-5">
                 <div className="row justify-content-center ms-5 pt-4">
                    <div className="col-6 ">

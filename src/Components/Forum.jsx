@@ -10,8 +10,9 @@ import UserContext from "../Context/Student";
 import AlumniContext from "../Context/Alumni";
 const Forum=()=>{
     const {alumniData}=useContext(AlumniContext);
-    console.log(alumniData.alumni);
+   
     const {student}=useContext(UserContext);
+    console.log(alumniData.alumni+" "+student);
     return(
         <>
        {alumniData.alumni===true && <AlumniNavbar/>}

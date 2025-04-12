@@ -20,7 +20,7 @@ const AlumniPost = () => {
 
     fetch(`http://localhost:9000/posts/list/${rollno}`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Use token for authentication
+        Authorization: `Bearer ${token}`, 
       },
     })
       .then((response) => {
