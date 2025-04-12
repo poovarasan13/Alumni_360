@@ -59,7 +59,7 @@ const login = async (req, res) => {
         if (!alumniData) {
             return res.status(404).json({ success: false, message: "Alumni not found" });
         }
-
+        console.log(alumniData)
         if (!alumniData.alumni) {
             return res.status(403).json({ success: false, message: "You are not registered as an alumni" });
         }
@@ -68,7 +68,7 @@ const login = async (req, res) => {
             return res.status(401).json({ success: false, message: "Incorrect password" });
         }
 
-        // Fetch or create alumni details
+   
         let details = await AlumniDetails.findOne({ rollno: roll });
 
         if (!details) {

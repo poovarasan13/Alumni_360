@@ -29,9 +29,9 @@ exports.listPosts = async (req, res) => {
     if (!rollno) {
       return res.status(400).json({ error: "Roll number is required!" });
     }
-    if (req.user.rollno !== rollno) {
-      return res.status(403).json({ error: "You are not authorized to view posts for this roll number" });
-    }
+    // if (req.user.rollno !== rollno) {
+    //   return res.status(403).json({ error: "You are not authorized to view posts for this roll number" });
+    // }
 
     const posts = await Post.find({ rollno });
     res.status(200).json(posts);
