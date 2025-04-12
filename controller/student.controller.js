@@ -1,80 +1,114 @@
 const UserData=require('../modal/Data.js');
 const AlumniDetails=require('../modal/AlumniDetails.js');
-const express = require("express");
-// const router=express.Router();
-const login = async (req, res) => {
-   console.log("Login attempt received");
-   const { roll, password } = req.body;
-   try {
-       const Data = await UserData.findOne({ rollno: roll });
-       console.log(Data);
-       if (!Data) {
-           return res.status(404).json({ success: false, message: "Student not found" });
-       }
-     if(Data.alumni===true)
-        {
-            return res.status(201).json({success:false,alumni:true,message:"You are alumni"});
-        } 
-      else if (Data.password === password) {
-           console.log(Data);
-           return res.status(200).json({ 
-               success: true, 
-               message: "Login Successfully", 
-                student:Data
-           });
 
-       }
-       else {
-           return res.status(401).json({ success: false, message: "Incorrect Password" });
-       }
-   } catch (err) {
-       return res.status(500).json({ success: false, message: err.message });
-   }
-};
-   //    name: Data.name, 
-            //    mobile: Data.mobile 
-const alumnilogin = async (req, res) => {
-    console.log("Login attempt received");
-    const { roll, password } = req.body;
-    try {
-        const { roll, password } = req.body;
-    
-        // Check if user exists in 'Data' (authentication)
-        const a = await UserData.findOne({ rollno: roll });
-    
-        if (!a) {
-          return res.status(401).json({ success: false, user: true, password: false, message: "Invalid credentials" });
+const jwt = require('jsonwebtoken');
+
+const login = async (req, res) => {
+  console.log("Login attempt received");
+  const { roll, password } = req.body;
+
+  try {
+      const Data = await UserData.findOne({ rollno: roll });
+      console.log(Data);
+
+      if (!Data) {
+          return res.status(404).json({ success: false, message: "Student not found" });
       }
-      
-      const alumni = await UserData.findOne({ rollno: roll ,password });
-    
-      if (!alumni) {
-        return res.status(401).json({ success: false, password:true,user:false,  message: "Invalid credentials" });
-    }
-        // Check if alumni details exist
-        let details = await AlumniDetails.findOne({ rollno: roll });
-    
-        // If no details exist, create an initial empty entry
-        if (!details) {
-          details = new AlumniDetails({
-            Name: alumni.name,
-            rollno: alumni.rollno,
-            FieldofWorking: null,
-            WorkLocation: null,
-            ProfilePhoto: null,
-            Gmail: null,
-            Linkedin: null,
-            CompanyName: null,
+
+      if (Data.alumni === true) {
+          return res.status(201).json({ success: false, alumni: true, message: "You are alumni" });
+      }
+      else if (Data.password === password) {
+          console.log(Data);
+          
+          
+          const payload = {
+              rollno: Data.rollno,
+              name: Data.name,
+              role: 'student',
+          };
+          
+   
+          const secretKey = process.env.JWT_SECRET ;
+          
+         
+          const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+
+          return res.status(200).json({
+              success: true,
+              message: "Login Successfully",
+              token: token,
+              role:'student',
+              student: Data
           });
-          await details.save();
-        }
-    
-        res.json({ success: true, alumni, details });
-      } catch (error) {
-        console.error("Error in alumni login:", error);
-        res.status(500).json({ success: false,message: "Server error" });
+      } else {
+          return res.status(401).json({ success: false, message: "Incorrect Password" });
       }
- };
+  } catch (err) {
+      return res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+  const alumnilogin = async (req, res) => {
+    console.log("Alumni login attempt received");
+    const { roll, password } = req.body;
+
+    try {
+        const alumniData = await UserData.findOne({ rollno: roll });
+
+        if (!alumniData) {
+            return res.status(404).json({ success: false, message: "Alumni not found" });
+        }
+
+        if (!alumniData.alumni) {
+            return res.status(403).json({ success: false, message: "You are not registered as an alumni" });
+        }
+
+        if (alumniData.password !== password) {
+            return res.status(401).json({ success: false, message: "Incorrect password" });
+        }
+
+        // Fetch or create alumni details
+        let details = await AlumniDetails.findOne({ rollno: roll });
+
+        if (!details) {
+            details = new AlumniDetails({
+                Name: alumniData.name,
+                rollno: alumniData.rollno,
+                FieldofWorking: null,
+                WorkLocation: null,
+                ProfilePhoto: null,
+                Gmail: null,
+                Linkedin: null,
+                CompanyName: null,
+            });
+            await details.save();
+        }
+
+        // Generate token
+        const payload = {
+            rollno: alumniData.rollno,
+            name: alumniData.name,
+            role: 'alumni',
+        };
+
+        const secretKey = process.env.JWT_SECRET;
+        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+
+        return res.status(200).json({
+            success: true,
+            message: "Alumni login successful",
+            token,
+            role: 'alumni',
+            alumni: alumniData,
+            details
+        });
+    } catch (error) {
+        console.error("Error in alumni login:", error);
+        return res.status(500).json({ success: false, message: "Server error" });
+    }
+};
+
  const editalumni = async (req, res) => {
     try {
       console.log("Incoming file:", req.file); // Debugging: Check if file exists
