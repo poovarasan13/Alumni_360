@@ -15,12 +15,12 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from 'uploads' folder
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
+
 app.use('/', StudentRouter);
-app.use('/forums', forum); // FIXED route
+app.use('/forums', forum);
 app.use("/webinars", webinarRoutes);
 app.use("/posts", postRoutes);
 app.use("/internships", internshipRoutes);
