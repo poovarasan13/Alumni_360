@@ -51,7 +51,7 @@ function VolunteerPage() {
 
                 {
                     volunteerData.map((data,index)=>(
-                        <div className="row mt-3" key={data.index}>
+                        <div className="row mt-3" key={index}>
                         <div className="col">
                         <div className="card">
                             <div className="card-body">

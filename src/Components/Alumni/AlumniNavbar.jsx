@@ -1,17 +1,24 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../assets/style/Navbar.css";
 import HomeButton2 from "../HomeButton2";
-import Logo from "../Logo"
+import Logo from "../Logo";
 import AlumniContext from "../../Context/Alumni";
+
 function AlumniNavbar() {
-  const {alumniData}=useContext(AlumniContext);
-  // console.log(alumniData);
+  const { alumniData } = useContext(AlumniContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/home");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-color fixed-top custom-navbar">
       <div className="container-fluid">
         <div className="navbar-brand text">
-                       <Logo/>
+          <Logo />
         </div>
         <button
           className="navbar-toggler"
@@ -26,12 +33,11 @@ function AlumniNavbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto">
-            {/* <li className="nav-item mx-4">
-              <Link to="/home" className="nav-link fw-medium fs-7 fw-bold">
+            <li className="nav-item mx-4">
+              <Link to="/alumnipage" className="nav-link fw-medium fs-7 fw-bold">
                 Home
               </Link>
-            </li> */}
-            
+            </li>
             <li className="nav-item mx-4">
               <Link to="/forum" className="nav-link fw-medium fs-7 fw-bold">
                 Forum
@@ -43,9 +49,12 @@ function AlumniNavbar() {
               </Link>
             </li>
             <li className="nav-item mx-4">
-              <Link to="/home" className="nav-link fw-medium fs-7 fw-bold">
+              <button
+                className="nav-link fw-medium fs-7 fw-bold bg-transparent border-0"
+                onClick={handleLogout}
+              >
                 Logout
-              </Link>
+              </button>
             </li>
           </ul>
           <div className="d-flex">

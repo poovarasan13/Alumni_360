@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import AlumniContext from "../../Context/Alumni";
 
+
 const AlumniWebinar = () => {
   const [webinarData, setWebinarData] = useState([]);
   const [eventName, setEventName] = useState("");
@@ -9,14 +10,31 @@ const AlumniWebinar = () => {
   const [eventDescription, setEventDescription] = useState("");
   const [editId, setEditId] = useState(null);
   const { alumniData } = useContext(AlumniContext);
-  const rollno=alumniData.rollno;
-  //  console.log("Poo"+alumniData.rollno);
+  const token  =localStorage.getItem("token");
+  const rollno = alumniData?.rollno;
+  const [authError, setAuthError] = useState(false);
+
   useEffect(() => {
-    fetch(`http://localhost:9000/webinars/list/${rollno}`)
-      .then((response) => response.json())
+    if (!rollno) {
+      setAuthError(true);
+      return;
+    }
+
+    fetch(`http://localhost:9000/webinars/list/${rollno}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Use token from context
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          setAuthError(true);
+          throw new Error("Unauthorized");
+        }
+        return response.json();
+      })
       .then((data) => setWebinarData(data))
       .catch((error) => console.error("Error fetching webinars:", error));
-  }, []);
+  }, [rollno, token]); // Re-fetch when token changes
 
   const handleSubmitWebinar = async () => {
     if (!eventName || !eventTime || !eventDescription || (!editId && !eventImage)) {
@@ -29,7 +47,6 @@ const AlumniWebinar = () => {
     formData.append("webinarname", eventName);
     formData.append("time", eventTime);
     formData.append("description", eventDescription);
-     console.log(formData);
 
     if (eventImage) {
       formData.append("image", eventImage);
@@ -39,12 +56,20 @@ const AlumniWebinar = () => {
     const method = editId ? "PUT" : "POST";
 
     try {
-      const response = await fetch(url, { method, body: formData });
+      const response = await fetch(url, {
+        method,
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
 
       if (response.ok) {
         setWebinarData(
-          editId ? webinarData.map((webinar) => (webinar._id === editId ? data.webinar : webinar)) : [...webinarData, data.webinar]
+          editId
+            ? webinarData.map((webinar) => (webinar._id === editId ? data.webinar : webinar))
+            : [...webinarData, data.webinar]
         );
         resetForm();
       } else {
@@ -61,6 +86,9 @@ const AlumniWebinar = () => {
     try {
       const response = await fetch(`http://localhost:9000/webinars/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Pass token from context
+        },
       });
 
       if (response.ok) {
@@ -91,19 +119,24 @@ const AlumniWebinar = () => {
     document.getElementById("closeModal").click();
   };
 
+  if (authError) {
+    return <div>You are not authorized to access this page. Please log in.</div>;
+  }
+
   return (
     <div className="container mt-4">
- 
       <div className="row justify-content-center">
         <div className="col-2">
-        
-        <button className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createWebinarModal">
-           Create Webinar
-        </button>
+          <button
+            className="btn btn-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#createWebinarModal"
+          >
+            Create Webinar
+          </button>
         </div>
       </div>
 
-     
       <div className="row mt-4">
         {webinarData.map((webinar) => (
           <div className="col-md-4 mb-3" key={webinar._id}>
@@ -118,10 +151,18 @@ const AlumniWebinar = () => {
                 <h5 className="card-title">{webinar.webinarname}</h5>
                 <p className="card-text">{webinar.time}</p>
                 <p className="card-text">{webinar.description}</p>
-                <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(webinar)} data-bs-toggle="modal" data-bs-target="#createWebinarModal">
+                <button
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => handleEdit(webinar)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#createWebinarModal"
+                >
                   Edit
                 </button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(webinar._id)}>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(webinar._id)}
+                >
                   Delete
                 </button>
               </div>
@@ -130,7 +171,6 @@ const AlumniWebinar = () => {
         ))}
       </div>
 
-     
       <div className="modal fade" id="createWebinarModal">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -139,10 +179,32 @@ const AlumniWebinar = () => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" id="closeModal"></button>
             </div>
             <div className="modal-body">
-              <input type="text" className="form-control mb-2" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
-              <input type="text" className="form-control mb-2" placeholder="Time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
-              <textarea className="form-control mb-2" placeholder="Description" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} />
-              <input type="file" className="form-control mb-2" accept="image/*" onChange={(e) => setEventImage(e.target.files[0])} />
+              <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Event Name"
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+              />
+              <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Time"
+                value={eventTime}
+                onChange={(e) => setEventTime(e.target.value)}
+              />
+              <textarea
+                className="form-control mb-2"
+                placeholder="Description"
+                value={eventDescription}
+                onChange={(e) => setEventDescription(e.target.value)}
+              />
+              <input
+                type="file"
+                className="form-control mb-2"
+                accept="image/*"
+                onChange={(e) => setEventImage(e.target.files[0])}
+              />
             </div>
             <div className="modal-footer">
               <button className="btn btn-primary btn-sm" onClick={handleSubmitWebinar}>

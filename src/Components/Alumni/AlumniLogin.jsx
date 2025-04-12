@@ -37,6 +37,7 @@ const AlumniLogin = () => {
         
            if(data.success)
            {
+            localStorage.setItem("token", data.token);
            console.log("Login Success");
           //  setName(data.alumni.name);
           //  setMobile(data.student.mobile);
@@ -52,7 +53,8 @@ const AlumniLogin = () => {
               ProfilePhoto: data.details?.ProfilePhoto || "",
               WorkLocation: data.details?.WorkLocation || "",
               FieldOfWorking: data.details?.FieldofWorking || "",
-              CompanyName: data.details?.CompanyName || ""
+              CompanyName: data.details?.CompanyName || "",
+              alumni:true
             });
       // }
            navigate('/alumnipage');
@@ -71,7 +73,7 @@ const AlumniLogin = () => {
         <>
          
               <div className=" mt-3 ms-5">
-                   <Logo/>                                                             
+                   <Logo/>
               </div>
               {/* <div className="row">
                 <div className="col">
@@ -135,7 +137,7 @@ const AlumniLogin = () => {
                               <div className="text-danger text-center">
                                 Password is incorrect</div>}
                               
-                              <SButton name="Login" type='submit' color="color2"/> 
+                              <SButton name="Login" type='submit' color="color2"/>
                               
                               </form>
 

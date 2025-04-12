@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import AlumniContext from "../../Context/Alumni";
-import CardImage from "../../assets/images/webinar.png";
 
 const AlumniPost = () => {
   const [posts, setPosts] = useState([]);
@@ -9,14 +8,31 @@ const AlumniPost = () => {
   const [postImage, setPostImage] = useState(null);
   const [editId, setEditId] = useState(null);
   const { alumniData } = useContext(AlumniContext);
-  const rollno = alumniData.rollno;
+  const token = localStorage.getItem("token"); // Fetch token from localStorage
+  const rollno = alumniData?.rollno;
+  const [authError, setAuthError] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:9000/posts/list/${rollno}`)
-      .then((response) => response.json())
+    if (!rollno) {
+      setAuthError(true);
+      return;
+    }
+
+    fetch(`http://localhost:9000/posts/list/${rollno}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Use token for authentication
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          setAuthError(true);
+          throw new Error("Unauthorized");
+        }
+        return response.json();
+      })
       .then((data) => setPosts(data))
       .catch((error) => console.error("Error fetching posts:", error));
-  }, []);
+  }, [rollno, token]); // Re-fetch when token changes
 
   const handleSubmitPost = async () => {
     if (!postName || !postDescription || (!editId && !postImage)) {
@@ -36,7 +52,13 @@ const AlumniPost = () => {
     const method = editId ? "PUT" : "POST";
 
     try {
-      const response = await fetch(url, { method, body: formData });
+      const response = await fetch(url, {
+        method,
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`, // Pass token in headers for authentication
+        },
+      });
       const data = await response.json();
 
       if (response.ok) {
@@ -60,6 +82,9 @@ const AlumniPost = () => {
     try {
       const response = await fetch(`http://localhost:9000/posts/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Pass token in headers for authentication
+        },
       });
 
       if (response.ok) {
@@ -88,6 +113,10 @@ const AlumniPost = () => {
     document.getElementById("closeModal").click();
   };
 
+  if (authError) {
+    return <div>You are not authorized to access this page. Please log in.</div>;
+  }
+
   return (
     <div className="container mt-4">
       <div className="row justify-content-center">
@@ -105,7 +134,7 @@ const AlumniPost = () => {
       <div className="row mt-4">
         {posts.map((post) => (
           <div className="col-md-4 mb-3" key={post._id}>
-            <div className="card text-center" style={{width:"18rem"}}>
+            <div className="card text-center">
               <img
                 src={`http://localhost:9000${post.image}`}
                 alt={post.name}
@@ -140,12 +169,7 @@ const AlumniPost = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">{editId ? "Edit Post" : "Create Post"}</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                id="closeModal"
-              ></button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" id="closeModal"></button>
             </div>
             <div className="modal-body">
               <input

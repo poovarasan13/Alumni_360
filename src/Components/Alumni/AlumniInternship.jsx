@@ -7,19 +7,26 @@ const AlumniInternship = () => {
   const [company, setCompany] = useState("");
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
-  const [link,setLink]=useState('');
+  const [link, setLink] = useState('');
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
- const {alumniData}=useContext(AlumniContext);
- const rollno=alumniData.rollno;
+  const { alumniData } = useContext(AlumniContext);
+  const rollno = alumniData.rollno;
+
   // Fetch Internships
   useEffect(() => {
     fetchInternships();
   }, []);
 
+  const token = localStorage.getItem("token");
+
   const fetchInternships = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/internships/list/${rollno}`);
+      const response = await fetch(`http://localhost:9000/internships/list/${rollno}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
       setInternships(data);
     } catch (error) {
@@ -39,9 +46,9 @@ const AlumniInternship = () => {
     formData.append("company", company);
     formData.append("duration", duration);
     formData.append("description", description);
-    formData.append("rollno",rollno);
-    formData.append("link",link)
-        if (image) formData.append("image", image);
+    formData.append("rollno", rollno);
+    formData.append("link", link);
+    if (image) formData.append("image", image);
 
     const url = editId
       ? `http://localhost:9000/internships/update/${editId}`
@@ -49,7 +56,13 @@ const AlumniInternship = () => {
     const method = editId ? "PUT" : "POST";
 
     try {
-      const response = await fetch(url, { method, body: formData });
+      const response = await fetch(url, {
+        method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
       const data = await response.json();
 
       if (response.ok) {
@@ -76,6 +89,9 @@ const AlumniInternship = () => {
     try {
       const response = await fetch(`http://localhost:9000/internships/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
@@ -109,24 +125,23 @@ const AlumniInternship = () => {
     setEditId(null);
     setImage(null);
     setLink('');
-    document.getElementById("closeModal").click(); // Close modal after submit
+    document.getElementById("closeModal").click();
   };
 
   return (
     <div className="container mt-4">
       <div className="row justify-content-center">
         <div className="col-2">
-        <button
-        id="openModalBtn"
-        className="btn btn-primary mb-3"
-        data-bs-toggle="modal"
-        data-bs-target="#internshipModal"
-      >
-        Add Internship
-      </button>
+          <button
+            id="openModalBtn"
+            className="btn btn-primary mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#internshipModal"
+          >
+            Add Internship
+          </button>
         </div>
       </div>
-
 
       {/* Bootstrap Modal for Add/Edit */}
       <div className="modal fade" id="internshipModal" tabIndex="-1" aria-hidden="true">
@@ -169,7 +184,7 @@ const AlumniInternship = () => {
                 className="form-control mb-2"
                 onChange={(e) => setImage(e.target.files[0])}
               />
-               <input
+              <input
                 type="text"
                 className="form-control mb-2"
                 placeholder="Link"
@@ -193,7 +208,7 @@ const AlumniInternship = () => {
       <div className="row">
         {internships.map((internship) => (
           <div className="col-md-4 mb-3" key={internship._id}>
-            <div className="card" style={{width:"17rem"}}>
+            <div className="card" style={{ width: "17rem" }}>
               <img
                 src={`http://localhost:9000${internship.image}`}
                 className="card-img-top"

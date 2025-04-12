@@ -31,9 +31,12 @@ const StudentLogin=()=>{
              if(data.success)
              {
              console.log("Login Success");
+             localStorage.setItem('token', data.token);
+             localStorage.setItem('role', data.role);
              setName(data.student.name);
              setMobile(data.student.mobile);
              setRollno(data.student.rollno);
+             setStudent(true);
              navigate('/studenthome');
              }
              if(data.alumni===true)
@@ -51,7 +54,7 @@ const StudentLogin=()=>{
         <>
          
               <div className=" mt-3 ms-5">
-                   <Logo/>                                                             
+                   <Logo/>
               </div>
               {/* <div className="row">
                 <div className="col">
