@@ -2,23 +2,35 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/style/Navbar.css";
 import HomeButton2 from "./HomeButton2";
-import Logo from "./Logo"
+import Logo from "./Logo";
 import UserContext from "../Context/Student";
+
 function Navbar() {
-  const navigate=useNavigate();
-   const{name,setName,setStudent}=useContext(UserContext);
-   const handleLogout = () => {
+  const navigate = useNavigate();
+  const {
+    name,
+    setName,
+    setStudent,
+    setSkipSave
+  } = useContext(UserContext);
+
+  const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("studentData");
+
+    setSkipSave(true); // Prevent saving after reset
+
     setName("");
     setStudent(false);
+    
     navigate("/home");
   };
+
   return (
     <nav className="navbar navbar-expand-lg bg-color fixed-top custom-navbar">
       <div className="container-fluid">
         <div className="navbar-brand text">
-                       <Logo/>
+          <Logo />
         </div>
         <button
           className="navbar-toggler"
@@ -33,14 +45,9 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto">
-            {/* <li className="nav-item mx-4">
-              <Link to="/home" className="nav-link fw-medium fs-7 fw-bold">
-                Home
-              </Link>
-            </li> */}
             <li className="nav-item mx-4">
               <Link to="/studenthome" className="nav-link fw-medium fs-7 fw-bold">
-              Home
+                Home
               </Link>
             </li>
             <li className="nav-item mx-4">
@@ -54,17 +61,17 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item mx-4">
-            <span onClick={handleLogout} className="nav-link fw-medium fs-7 fw-bold">
+              <span onClick={handleLogout} className="nav-link fw-medium fs-7 fw-bold">
                 Logout
               </span>
             </li>
           </ul>
-   
-           {name.length!==0 &&
-           <div className="d-flex">
-                {name} 
-       </div>
-           }
+
+          {name.length !== 0 &&
+            <div className="d-flex">
+              {name}
+            </div>
+          }
         </div>
       </div>
     </nav>

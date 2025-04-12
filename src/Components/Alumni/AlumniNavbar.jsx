@@ -1,21 +1,32 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../assets/style/Navbar.css";
-import HomeButton2 from "../HomeButton2";
+
 import Logo from "../Logo";
 import AlumniContext from "../../Context/Alumni";
 
 function AlumniNavbar() {
-  const { alumniData ,setAlumniData } = useContext(AlumniContext);
+  const { alumniData, setAlumniData, setSkipSave } = useContext(AlumniContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("alumniData");
-    setAlumniData( prev=>({
-      ...prev,alumni:false
-    }))
-   
+
+    setSkipSave(true); 
+
+    setAlumniData({
+      Name: '',
+      FieldofWorking: '',
+      WorkLocation: '',
+      ProfilePhoto: '',
+      Gmail: '',
+      Linkedin: '',
+      rollno: '',
+      CompanyName: '',
+      alumni: false
+    });
+
     navigate("/home");
   };
 

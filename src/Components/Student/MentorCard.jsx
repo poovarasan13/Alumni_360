@@ -2,10 +2,16 @@ import "../../assets/style/MentorCard.css";
 import Gmail from "../../assets/images/Gmail.png";
 import Linkedin from "../../assets/images/Linkedin.png";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
 const MentorCard = (props) => {
     const navigate = useNavigate();
-
+    useEffect(() => {
+      
+        localStorage.removeItem("mentor");
+    
+       
+        
+      }, []);
     const handleCardClick = () => {
         navigate("/alumnidetails", { state: { mentor: props } });
     };

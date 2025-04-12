@@ -19,12 +19,16 @@ const AlumniListProvider = (props) => {
         };
   });
 
+  const [skipSave, setSkipSave] = useState(false); // new flag
+
   useEffect(() => {
-    localStorage.setItem('alumniData', JSON.stringify(alumniData));
-  }, [alumniData]);
+    if (!skipSave) {
+      localStorage.setItem('alumniData', JSON.stringify(alumniData));
+    }
+  }, [alumniData, skipSave]);
 
   return (
-    <Context.Provider value={{ alumniData, setAlumniData }}>
+    <Context.Provider value={{ alumniData, setAlumniData, setSkipSave }}>
       {props.children}
     </Context.Provider>
   );
