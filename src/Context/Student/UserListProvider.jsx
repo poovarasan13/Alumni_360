@@ -8,7 +8,7 @@ const UserListProvider = (props) => {
   const [mobile, setMobile] = useState(storedData?.mobile || '');
   const [rollno, setRollno] = useState(storedData?.rollno || '');
   const [student, setStudent] = useState(storedData?.student || false);
-  const [skipSave, setSkipSave] = useState(false); // NEW flag
+  const [skipSave, setSkipSave] = useState(false);  
 
   useEffect(() => {
     if (!skipSave) {

@@ -8,7 +8,7 @@ const AlumniPost = () => {
   const [postImage, setPostImage] = useState(null);
   const [editId, setEditId] = useState(null);
   const { alumniData } = useContext(AlumniContext);
-  const token = localStorage.getItem("token"); // Fetch token from localStorage
+  const token = localStorage.getItem("token"); 
   const rollno = alumniData?.rollno;
   const [authError, setAuthError] = useState(false);
 
@@ -32,7 +32,7 @@ const AlumniPost = () => {
       })
       .then((data) => setPosts(data))
       .catch((error) => console.error("Error fetching posts:", error));
-  }, [rollno, token]); // Re-fetch when token changes
+  }, [rollno, token]); 
 
   const handleSubmitPost = async () => {
     if (!postName || !postDescription || (!editId && !postImage)) {
@@ -56,7 +56,7 @@ const AlumniPost = () => {
         method,
         body: formData,
         headers: {
-          Authorization: `Bearer ${token}`, // Pass token in headers for authentication
+          Authorization: `Bearer ${token}`, 
         },
       });
       const data = await response.json();
@@ -83,7 +83,7 @@ const AlumniPost = () => {
       const response = await fetch(`http://localhost:9000/posts/delete/${id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`, // Pass token in headers for authentication
+          Authorization: `Bearer ${token}`, 
         },
       });
 

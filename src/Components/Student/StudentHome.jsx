@@ -6,11 +6,11 @@ import Footer from "../Footer";
 
 const StudentHome = () => {
   const [mentors, setMentors] = useState([]);
-  const studentData = JSON.parse(localStorage.getItem("studentData"));  // Load data from localStorage
+  const studentData = JSON.parse(localStorage.getItem("studentData"));
 
   useEffect(() => {
     if (!studentData) {
-      // If no student data is found, redirect to login
+     
       window.location.href = '/login';
     }
 

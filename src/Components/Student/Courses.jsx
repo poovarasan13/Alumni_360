@@ -5,17 +5,6 @@ import coursesImg from "../../assets/images/onlinecourses.png";
 const Courses = ({ posts }) => {
     const [courses, setCourses] = useState([]);
 
-    // useEffect(() => {
-    //     if (rollno) {
-    //         fetch(`http://localhost:9000/courses/list/${rollno}`)
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 console.log("Fetched Courses:", data);
-    //                 setCourses(data);
-    //             })
-    //             .catch(error => console.error("Error fetching courses:", error));
-    //     }
-    // }, [rollno]);
 
     const handleNavigate = (course) => {
         if (course.link) {

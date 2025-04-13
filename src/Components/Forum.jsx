@@ -10,7 +10,7 @@ import UserContext from "../Context/Student";
 import AlumniContext from "../Context/Alumni";
 const Forum=()=>{
     const {alumniData}=useContext(AlumniContext);
-   
+
     const {student}=useContext(UserContext);
     console.log(alumniData.alumni+" "+student);
     return(
@@ -25,25 +25,14 @@ const Forum=()=>{
                     <div className="col">
                     <Routes>
                         <Route path="/" element={<ForumHome/>}/>
-                        <Route path="/other" element={<OtherForum/>}/>
-                        
-                        <Route path="/forumprog" element={<ForumHome/>}/>
-                        <Route path="/forumhome" element={<ForumHome/>}/>
-                        <Route path="/forumhome" element={<ForumHome/>}/>
-                        <Route path="/forumhome" element={<ForumHome/>}/>
-                        <Route path="/forumhome" element={<ForumHome/>}/>
-                        <Route path="/forumhome" element={<ForumHome/>}/>
-                        <Route path="/forumhome" element={<ForumHome/>}/>
-
-
-
-                        <Route path="/:id" element={<PostDetails/>}/>
+                        <Route path="/:type" element={<OtherForum />} />
+                        <Route path="post/:id" element={<PostDetails/>}/>
                     </Routes>
                     </div>
                 </div>
             </div>
         </>
-    )   
+    )
 }
 
 export default Forum;

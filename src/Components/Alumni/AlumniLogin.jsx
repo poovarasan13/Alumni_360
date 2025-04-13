@@ -59,7 +59,7 @@ const AlumniLogin = () => {
         return;
       }
 
-      // Successful login
+    
       localStorage.setItem("token", data.token);
 
       setAlumniData({

@@ -19,7 +19,7 @@ const AlumniListProvider = (props) => {
         };
   });
 
-  const [skipSave, setSkipSave] = useState(false); // new flag
+  const [skipSave, setSkipSave] = useState(false); 
 
   useEffect(() => {
     if (!skipSave) {

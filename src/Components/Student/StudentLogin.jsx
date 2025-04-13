@@ -31,13 +31,13 @@ const StudentLogin = () => {
       console.log(data);
       localStorage.setItem("token", data.token);
       if (data.success) {
-        // Set context values and store data in localStorage
+       
         setName(data.student.name);
         setMobile(data.student.mobile);
         setRollno(data.student.rollno);
         setStudent(true);
 
-        // Save data to localStorage
+       
         const studentData = {
           name: data.student.name,
           mobile: data.student.mobile,

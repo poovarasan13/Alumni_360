@@ -14,11 +14,4 @@
     object-fit: cover;
 }
 
-.name {
-    font-size: 1rem;
-    /* font-weight: bold; */
-    color: #333;
-    line-height: 25px; 
-    margin-left: 0 !important; 
-    padding-left: 0 !important;
-}
+

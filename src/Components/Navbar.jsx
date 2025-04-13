@@ -18,7 +18,7 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("studentData");
 
-    setSkipSave(true); // Prevent saving after reset
+    setSkipSave(true); 
 
     setName("");
     setStudent(false);

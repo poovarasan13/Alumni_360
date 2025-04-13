@@ -13,7 +13,7 @@ const AlumniInternship = () => {
   const { alumniData } = useContext(AlumniContext);
   const rollno = alumniData.rollno;
 
-  // Fetch Internships
+
   useEffect(() => {
     fetchInternships();
   }, []);
@@ -34,7 +34,6 @@ const AlumniInternship = () => {
     }
   };
 
-  // Handle Submit (Add/Update)
   const handleSubmit = async () => {
     if (!name || !company || !duration || !description || (!editId && !image)) {
       alert("Please fill all fields and select an image.");
@@ -82,7 +81,7 @@ const AlumniInternship = () => {
     }
   };
 
-  // Handle Delete
+
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this internship?")) return;
 
@@ -104,7 +103,7 @@ const AlumniInternship = () => {
     }
   };
 
-  // Handle Edit
+
   const handleEdit = (internship) => {
     setName(internship.name);
     setCompany(internship.company);
@@ -113,10 +112,10 @@ const AlumniInternship = () => {
     setEditId(internship._id);
     setLink(internship.link);
     setImage(null);
-    document.getElementById("openModalBtn").click(); // Open modal for editing
+    document.getElementById("openModalBtn").click();
   };
 
-  // Reset Form
+
   const resetForm = () => {
     setName("");
     setCompany("");

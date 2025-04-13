@@ -22,7 +22,7 @@ const AlumniWebinar = () => {
 
     fetch(`http://localhost:9000/webinars/list/${rollno}`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Use token from context
+        Authorization: `Bearer ${token}`, 
       },
     })
       .then((response) => {
@@ -34,7 +34,7 @@ const AlumniWebinar = () => {
       })
       .then((data) => setWebinarData(data))
       .catch((error) => console.error("Error fetching webinars:", error));
-  }, [rollno, token]); // Re-fetch when token changes
+  }, [rollno, token]);  
 
   const handleSubmitWebinar = async () => {
     if (!eventName || !eventTime || !eventDescription || (!editId && !eventImage)) {
@@ -87,7 +87,7 @@ const AlumniWebinar = () => {
       const response = await fetch(`http://localhost:9000/webinars/delete/${id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`, // Pass token from context
+          Authorization: `Bearer ${token}`, 
         },
       });
 
