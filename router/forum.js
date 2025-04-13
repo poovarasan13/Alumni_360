@@ -4,15 +4,21 @@ const Forum = require("../modal/Forum");
 const multer = require("multer");
 const path = require("path");
 
-// 🔧 Multer storage configuration for image uploads
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
   filename: (req, file, cb) =>
     cb(null, Date.now() + path.extname(file.originalname)),
 });
-const upload = multer({ storage });
 
-// ✅ Get all forum posts
+
+const upload = multer({ storage });
+const multipleUpload = upload.fields([
+  { name: "imgPost", maxCount: 1 },
+  { name: "profileImg", maxCount: 1 },
+]);
+
+
 router.get("/", async (req, res) => {
   try {
     const forums = await Forum.find();
@@ -22,7 +28,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Get a single forum post by ID
+
 router.get("/:id", async (req, res) => {
   try {
     const forum = await Forum.findById(req.params.id);
@@ -35,16 +41,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ✅ Create a new forum post with image upload
-router.post("/", upload.single("imgPost"), async (req, res) => {
+
+router.post("/", multipleUpload, async (req, res) => {
   try {
-    const { name, content, para } = req.body;
+    const { name, content, para, forumType, username, rollno ,profileImgPath} = req.body;
+
+    const imgPost = req.files?.imgPost?.[0]?.filename || null;
+    const profileImg = profileImgPath || null;
 
     const newPost = new Forum({
       name,
       content,
       para,
-      imgPost: req.file ? req.file.filename : null,
+      forumType,
+      username,
+      rollno,
+      imgPost,
+      profileImg,
     });
 
     await newPost.save();
@@ -55,7 +68,7 @@ router.post("/", upload.single("imgPost"), async (req, res) => {
   }
 });
 
-// ✅ Add a comment to a specific forum post
+
 router.post("/:id/comments", async (req, res) => {
   const { pName, pComment, pImage } = req.body;
 
@@ -66,11 +79,21 @@ router.post("/:id/comments", async (req, res) => {
     forum.comments.push({ pName, pComment, pImage });
     await forum.save();
 
-    res.json(forum); // return the updated forum
+    res.json(forum);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to add comment" });
   }
 });
 
+router.get("/type/:forumType", async (req, res) => {
+  try {
+    const forumType = decodeURIComponent(req.params.forumType); 
+    const forums = await Forum.find({ forumType });
+    res.json(forums);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch forums by type" });
+  }
+});
 module.exports = router;

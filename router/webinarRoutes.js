@@ -5,7 +5,7 @@ const router = express.Router();
 const webinarController = require("../controller/webinarController");
 const authenticateAlumni = require("../middleware/authenticateAlumni");
 const authenticateStudent =require('../middleware/authenticateStudent')
-// Set up Multer storage
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");

@@ -4,7 +4,11 @@ const forumSchema = new mongoose.Schema({
   name: String,
   content: String,
   para: String,
-  imgPost: String, // Stores filename
+  imgPost: String,
+  profileImg: String,
+  forumType: String,
+  username: String,
+  rollno: String,
   comments: [
     {
       pName: String,
