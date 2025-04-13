@@ -11,6 +11,7 @@ import AlumniLogin from '../Components/Alumni/AlumniLogin'
 import AlumniPage from '../Components/Alumni/AlumniPage';
 import { Routes,Route } from 'react-router-dom';
 import AdminPage from '../Components/Admin';
+import AdminLogin from '../Components/Admin/AdminLogin';
 const AppNavigation = () => {
   return (
     <div>
@@ -26,7 +27,8 @@ const AppNavigation = () => {
                    <Route path="/studentlogin" element={<StudentLogin/>}/>
                    <Route path="/alumnidetails/*" element={<AlumniDetails/>}/>
                    <Route path="/alumnipage/*" element={<AlumniPage/>}/>\
-                   <Route path="/admin/*" element={<AdminPage/>}/>
+                   <Route path="/admin" element={<AdminLogin/>}/>
+                   <Route path="/adminpage/*" element={<AdminPage/>}/>
                    
           </Routes>
     </div>
