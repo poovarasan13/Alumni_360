@@ -7,7 +7,7 @@ const internshipRoutes = require('./router/internshipRoutes.js');
 const forum = require('./router/forum.js');
 const cors = require('cors');
 const path = require('path');
-
+const studentUploads = require('./router/studentUploads.js');
 const app = express();
 const port = 9000;
 
@@ -15,16 +15,14 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 
 app.use('/', StudentRouter);
 app.use('/forums', forum);
 app.use("/webinars", webinarRoutes);
 app.use("/posts", postRoutes);
 app.use("/internships", internshipRoutes);
-
+app.use('/upload-students', studentUploads); // Note the change here
 app.listen(port, () => {
   console.log("Server is running on port =", port);
 });
