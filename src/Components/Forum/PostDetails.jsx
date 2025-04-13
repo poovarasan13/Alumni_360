@@ -1,4 +1,4 @@
-import React, { useContext, useEffect,useRef , useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import PostComment from "./PostComment";
@@ -23,6 +23,7 @@ import {
   LinkedinIcon,
   RedditIcon,
 } from "react-share";
+
 function PostDetails() {
   const { id } = useParams();
   const shareButtonRef = useRef(null);
@@ -36,6 +37,7 @@ function PostDetails() {
   const [userImage, setUserImage] = useState(user);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [postUrl, setPostUrl] = useState("");
 
   useEffect(() => {
     if (alumniData) {
@@ -55,6 +57,10 @@ function PostDetails() {
       setIsLoading(true);
       const response = await axios.get(`http://localhost:9000/forums/${id}`);
       setForum(response.data);
+      // Generate a random post URL
+      const randomString = Math.random().toString(36).substring(2, 15);
+      const generatedPostUrl = `http://localhost:9000/forums/${id}-${randomString}`;
+      setPostUrl(generatedPostUrl);
     } catch (err) {
       setError("Failed to fetch post. Please try again later.");
       console.error("Error fetching forum post:", err);
@@ -123,7 +129,6 @@ function PostDetails() {
     setShowShareOptions(!showShareOptions);
   };
 
-
   return (
     <div className="container mt-3 mt-md-4">
       <div className="row justify-content-center">
@@ -173,71 +178,68 @@ function PostDetails() {
                 </div>
               )}
 
-              
-<div className="mb-4 ms-3 d-flex justify-content-start align-items-center">
-  <button
-    className="btn btn-sm btn-outline-secondary me-3"
-    onClick={toggleShareOptions}
-    ref={shareButtonRef}
-  >
-    <i className="bi bi-share-fill me-1"></i> 
-  </button>
+              <div className="mb-4 ms-3 d-flex justify-content-start align-items-center">
+                <button
+                  className="btn btn-sm btn-outline-secondary me-3"
+                  onClick={toggleShareOptions}
+                  ref={shareButtonRef}
+                >
+                  <i className="bi bi-share-fill me-1"></i>
+                </button>
 
-  {showShareOptions && (
-    <div
-      className="d-flex position-absolute bg-light p-2 rounded shadow"
-      style={{ zIndex: 1, marginTop: "-50px" }}
-    >
-      <WhatsappShareButton
-        url={postUrl}
-        title={forum?.content}
-        className="me-2"
-      >
-        <WhatsappIcon size={32} round />
-      </WhatsappShareButton>
-      <FacebookShareButton
-        url={postUrl}
-        quote={forum?.content}
-        className="me-2"
-      >
-        <FacebookIcon size={32} round />
-      </FacebookShareButton>
-      <TwitterShareButton
-        url={postUrl}
-        title={forum?.content}
-        className="me-2"
-      >
-        <TwitterIcon size={32} round />
-      </TwitterShareButton>
-      <LinkedinShareButton
-        url={postUrl}
-        title={forum?.content}
-        summary={forum?.para}
-        source={window.location.origin}
-        className="me-2"
-      >
-        <LinkedinIcon size={32} round />
-      </LinkedinShareButton>
-      <RedditShareButton
-        url={postUrl}
-        title={forum?.content}
-        className="me-2"
-      >
-        <RedditIcon size={32} round />
-      </RedditShareButton>
-      <EmailShareButton
-        url={postUrl}
-        subject={forum?.content}
-        body={forum?.para}
-        className="me-2"
-      >
-        <EmailIcon size={32} round />
-      </EmailShareButton>
-    </div>
-  )}
-</div>
-
-
+                {showShareOptions && (
+                  <div
+                    className="d-flex position-absolute bg-light p-2 rounded shadow"
+                    style={{ zIndex: 1, marginTop: "-50px" }}
+                  >
+                    <WhatsappShareButton
+                      url={postUrl}
+                      title={forum?.content}
+                      className="me-2"
+                    >
+                      <WhatsappIcon size={32} round />
+                    </WhatsappShareButton>
+                    <FacebookShareButton
+                      url={postUrl}
+                      quote={forum?.content}
+                      className="me-2"
+                    >
+                      <FacebookIcon size={32} round />
+                    </FacebookShareButton>
+                    <TwitterShareButton
+                      url={postUrl}
+                      title={forum?.content}
+                      className="me-2"
+                    >
+                      <TwitterIcon size={32} round />
+                    </TwitterShareButton>
+                    <LinkedinShareButton
+                      url={postUrl}
+                      title={forum?.content}
+                      summary={forum?.para}
+                      source={window.location.origin}
+                      className="me-2"
+                    >
+                      <LinkedinIcon size={32} round />
+                    </LinkedinShareButton>
+                    <RedditShareButton
+                      url={postUrl}
+                      title={forum?.content}
+                      className="me-2"
+                    >
+                      <RedditIcon size={32} round />
+                    </RedditShareButton>
+                    <EmailShareButton
+                      url={postUrl}
+                      subject={forum?.content}
+                      body={forum?.para}
+                      className="me-2"
+                    >
+                      <EmailIcon size={32} round />
+                    </EmailShareButton>
+                  </div>
+                )}
+              </div>
               <div className="border-top pt-4">
                 <h4 className="mb-4 text-start">
                   Comments ({forum.comments.length})
