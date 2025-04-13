@@ -1,3 +1,4 @@
+// frontend: AddStudents.js
 import React, { useState } from 'react';
 
 const AddStudents = () => {
@@ -8,14 +9,39 @@ const AddStudents = () => {
     setFile(e.target.files[0]);
   };
 
-  const handleUpload = () => {
-    if (!batch || !file) {
-      alert('Please select a batch and upload a file.');
-      return;
+  const handleUpload = async () => {
+    console.log("enter upload");
+    try {
+      if (!batch || !file) {
+        throw new Error('Please select a batch and upload a file.');
+      }
+  
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('batch', batch);
+  
+      console.log("Preparing to upload...", formData);
+  
+      const response = await fetch('http://localhost:9000/upload-students', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      console.log("Received response:", response);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log("Parsed response data:", data);
+  
+      alert(data.message);
+    } catch (error) {
+      console.error('Error uploading file:', error);
     }
-    alert(`Uploading file: ${file.name} for batch: ${batch}`);
-
   };
+  
 
   return (
     <div className="container pt-5 mt-5 d-flex justify-content-center">
@@ -26,10 +52,10 @@ const AddStudents = () => {
             <form>
               <div className="mb-3">
                 <label className="form-label fw-bold">Select Batch</label>
-                <select 
-                  className="form-select" 
-                  name="batch" 
-                  value={batch} 
+                <select
+                  className="form-select"
+                  name="batch"
+                  value={batch}
                   onChange={(e) => setBatch(e.target.value)}
                 >
                   <option value="" disabled>Select Batch</option>
@@ -40,29 +66,29 @@ const AddStudents = () => {
                   <option value="2028">2028</option>
                   <option value="2029">2029</option>
                 </select>
-               
               </div>
 
               <div className="mb-3">
                 <label className="form-label fw-bold">Upload File</label>
-                <input 
-                  type="file" 
-                  className="form-control" 
-                  name="file" 
-                  onChange={handleFileChange} 
+                <input
+                  type="file"
+                  className="form-control"
+                  name="file"
+                  onChange={handleFileChange}
                 />
                 <div className="row justify-content-center">
                   <div className="col-11">
-                  <small className="text-justify  text-danger">Note:CSV File Format should be name, rollno, batch, department, alumni, mobile, password</small>
+                    <small className="text-justify  text-danger">
+                      Note: CSV File Format should be name, rollno, batch, department, alumni, mobile, password
+                    </small>
                   </div>
                 </div>
-                
               </div>
 
               <div className="text-center">
-                <button 
-                  type="button" 
-                  className="btn btn-primary btn-sm" 
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
                   onClick={handleUpload}
                 >
                   Upload
