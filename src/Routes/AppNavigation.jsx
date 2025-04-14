@@ -12,6 +12,8 @@ import AlumniPage from '../Components/Alumni/AlumniPage';
 import { Routes,Route } from 'react-router-dom';
 import AdminPage from '../Components/Admin';
 import AdminLogin from '../Components/Admin/AdminLogin';
+import ChatComponent from '../Components/OpenAi';
+
 const AppNavigation = () => {
   return (
     <div>
@@ -29,7 +31,7 @@ const AppNavigation = () => {
                    <Route path="/alumnipage/*" element={<AlumniPage/>}/>\
                    <Route path="/admin" element={<AdminLogin/>}/>
                    <Route path="/adminpage/*" element={<AdminPage/>}/>
-                   
+                   <Route path="/openai" element={<ChatComponent/>}/>
           </Routes>
     </div>
   )

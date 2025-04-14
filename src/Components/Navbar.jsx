@@ -56,6 +56,11 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item mx-4">
+              <Link to="/openai" className="nav-link fw-medium fs-7 fw-bold">
+                Open AI
+              </Link>
+            </li>
+            <li className="nav-item mx-4">
               <Link to="/volunteers" className="nav-link fw-medium fs-7 fw-bold">
                 Volunteers
               </Link>

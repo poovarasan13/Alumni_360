@@ -32,7 +32,7 @@ const StudentHome = () => {
       <Navbar />
       <div className="container-fluid div-color pt-5">
         <div className="row mx-4 pt-3">
-          <p>{`Hello, ${studentData?.name || "Student"}`}</p> {/* Display student name */}
+          <p>{`Hello, ${studentData?.name || "Student"}`}</p>
           {mentors.length > 0 ? (
             mentors.map((mentor, index) => (
               <MentorCard key={index} {...mentor} />
