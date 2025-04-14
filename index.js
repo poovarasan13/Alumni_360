@@ -11,6 +11,7 @@ const studentUploads = require('./router/studentUploads.js');
 const app = express();
 const port = 9000;
 const OpenAI=require('./router/OpenAI.js');
+const Admin=require('./router/Admin.js');
 connectDB();
 app.use(cors());
 app.use(express.json());
@@ -22,8 +23,9 @@ app.use('/forums', forum);
 app.use("/webinars", webinarRoutes);
 app.use("/posts", postRoutes);
 app.use("/internships", internshipRoutes);
-app.use('/upload-students', studentUploads); 
+app.use('/upload-students', studentUploads);
 app.use('/chat',OpenAI)
+app.use('/admin',Admin);
 app.listen(port, () => {
   console.log("Server is running on port =", port);
 });

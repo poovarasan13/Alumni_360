@@ -142,6 +142,35 @@ const alumni=async (req, res) => {
       res.status(500).json({ success: false, message: "Server error" });
   }
 };
+const updateBatchAlumni = async (req, res) => {
+    const { batch } = req.body;
 
-module.exports = {login,alumnilogin,editalumni,alumni};
+    try {
+        // Update all students in the specified batch to alumni status
+        const result = await UserData.updateMany(
+            { batch: parseInt(batch) },
+            { $set: { alumni: true } }
+        );
+
+        if (result.nModified === 0) {
+            return res.status(404).json({ 
+                success: false, 
+                message: `No students found in batch ${batch} or they are already alumni` 
+            });
+        }
+
+        return res.status(200).json({ 
+            success: true, 
+            message: `Successfully updated ${result.nModified} students from batch ${batch} to alumni status` 
+        });
+    } catch (error) {
+        console.error("Error updating batch alumni:", error);
+        return res.status(500).json({ 
+            success: false, 
+            message: "Error updating batch to alumni status",
+            error: error.message 
+        });
+    }
+};
+module.exports = {login,alumnilogin,editalumni,alumni,updateBatchAlumni};
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-const {login ,editalumni,alumnilogin,alumni}=require( '../controller/student.controller');
+const {login ,editalumni,alumnilogin,alumni ,updateBatchAlumni}=require( '../controller/student.controller');
 const router=express.Router();
 
 const storage = multer.diskStorage({
@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/login',login);
+router.put('/update-alumni', updateBatchAlumni);
 router.post('/alumni',alumnilogin);
 router.get('/alumni',alumni);
 router.put('/editalumni', upload.single("ProfilePhoto"),editalumni);
