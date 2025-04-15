@@ -12,7 +12,9 @@ const app = express();
 const port = 9000;
 const OpenAI=require('./router/OpenAI.js');
 const Admin=require('./router/Admin.js');
+
 connectDB();
+
 app.use(cors());
 app.use(express.json());
 
