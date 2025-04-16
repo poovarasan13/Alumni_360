@@ -38,7 +38,7 @@ function PostDetails() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [postUrl, setPostUrl] = useState("");
-
+  const [fcomment,setFComment]=useState(null);
   useEffect(() => {
     if (alumniData) {
       setUserName(alumniData.Name);
@@ -57,6 +57,8 @@ function PostDetails() {
       setIsLoading(true);
       const response = await axios.get(`http://localhost:9000/forums/${id}`);
       setForum(response.data);
+      setFComment(response.data.comments);
+      // console.log(response.data.comments);
       // Generate a random post URL
       const randomString = Math.random().toString(36).substring(2, 15);
       const generatedPostUrl = `http://localhost:9000/forums/${id}-${randomString}`;
@@ -128,7 +130,10 @@ function PostDetails() {
   const toggleShareOptions = () => {
     setShowShareOptions(!showShareOptions);
   };
-
+  // console.log(fcomment);
+  // fcomment=fcomment.filter(()=>)
+    const sortedComments = fcomment.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
+    // console.log(sortedComments)
   return (
     <div className="container mt-3 mt-md-4">
       <div className="row justify-content-center">
@@ -296,8 +301,8 @@ function PostDetails() {
                 </div>
 
                 <div className="mt-3">
-                  {forum.comments.length > 0 ? (
-                    forum.comments.map((c, i) => (
+                  {sortedComments.length > 0 ? (
+                    sortedComments.map((c, i) => (
                       <PostComment key={i} {...c} />
                     ))
                   ) : (
