@@ -14,6 +14,10 @@ const forumSchema = new mongoose.Schema({
       pName: String,
       pComment: String,
       pImage: String,
+      createAt:{
+        type:Date,
+        default:Date.now
+      }
     },
   ],
 });
