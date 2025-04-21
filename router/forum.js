@@ -71,12 +71,12 @@ router.post("/", multipleUpload, async (req, res) => {
 
 router.post("/:id/comments", async (req, res) => {
   const { pName, pComment, pImage } = req.body;
-
+  const createAt=new Date();
   try {
     const forum = await Forum.findById(req.params.id);
     if (!forum) return res.status(404).json({ message: "Forum not found" });
 
-    forum.comments.push({ pName, pComment, pImage });
+    forum.comments.push({ pName, pComment, pImage,createAt });
     await forum.save();
 
     res.json(forum);
