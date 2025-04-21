@@ -88,7 +88,7 @@ router.post("/:id/comments", async (req, res) => {
 
 router.get("/type/:forumType", async (req, res) => {
   try {
-    const forumType = decodeURIComponent(req.params.forumType); 
+    const forumType = decodeURIComponent(req.params.forumType);
     const forums = await Forum.find({ forumType });
     res.json(forums);
   } catch (error) {
