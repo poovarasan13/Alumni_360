@@ -4,7 +4,7 @@ const path = require("path");
 
 exports.createPost = async (req, res) => {
   try {
-    const { rollno, name, description } = req.body;
+    const { rollno, name, description,link } = req.body;
     const image = req.file ? `/uploads/${req.file.filename}` : null;
     if (req.user.rollno !== rollno) {
       return res.status(403).json({ error: "You are not authorized to create posts for this roll number" });
@@ -14,7 +14,7 @@ exports.createPost = async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    const newPost = new Post({ rollno, name, description, image });
+    const newPost = new Post({ rollno, name, description, image ,link});
     await newPost.save();
     res.status(201).json({ message: "Post created successfully", post: newPost });
   } catch (error) {
@@ -65,7 +65,7 @@ exports.deletePost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
   try {
-    const { name, description } = req.body;
+    const { name, description ,link} = req.body;
     const image = req.file ? `/uploads/${req.file.filename}` : null;
 
     const post = await Post.findById(req.params.id);
@@ -80,7 +80,7 @@ exports.updatePost = async (req, res) => {
 
     post.name = name || post.name;
     post.description = description || post.description;
-
+    post.link=link|| post.link;
    
     if (image) {
       if (post.image) {

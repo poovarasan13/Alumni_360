@@ -3,7 +3,7 @@ const Internship = require("../modal/Internship");
 // Create Internship
 exports.createInternship = async (req, res) => {
   try {
-    const { rollno,name, description, company, duration } = req.body;
+    const { rollno,name, description, company, duration,link } = req.body;
     const image = req.file ? `/uploads/${req.file.filename}` : null;
 
     const newInternship = new Internship({ rollno,name, description, company, duration, image });
@@ -29,7 +29,7 @@ exports.listInternships = async (req, res) => {
 // Update Internship
 exports.updateInternship = async (req, res) => {
   try {
-    const { name, description, company, duration } = req.body;
+    const { name, description, company, duration,link } = req.body;
     const image = req.file ? `/uploads/${req.file.filename}` : null;
 
     const internship = await Internship.findById(req.params.id);
@@ -41,6 +41,7 @@ exports.updateInternship = async (req, res) => {
     internship.description = description;
     internship.company = company;
     internship.duration = duration;
+    internship.link=link;
     if (image) {
       internship.image = image;
     }

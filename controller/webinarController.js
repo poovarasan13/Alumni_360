@@ -5,7 +5,7 @@ const path = require("path");
 
 exports.createWebinar = async (req, res) => {
   try {
-    const { rollno, webinarname, time, description } = req.body;
+    const { rollno, webinarname, time, description,link } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : "";
     
     if (!rollno) {
@@ -17,7 +17,8 @@ exports.createWebinar = async (req, res) => {
       webinarname,
       time,
       description,
-      image: imagePath
+      image: imagePath,
+      link
     });
     await newWebinar.save();
 
@@ -59,7 +60,7 @@ exports.listWebinars = async (req, res) => {
 
 exports.updateWebinar = async (req, res) => {
   try {
-    const { rollno, webinarname, time, description } = req.body;
+    const { rollno, webinarname, time, description ,link} = req.body;
     const existingWebinar = await Webinar.findById(req.params.id);
 
     if (!existingWebinar) {
@@ -76,7 +77,7 @@ exports.updateWebinar = async (req, res) => {
 
     const updatedWebinar = await Webinar.findByIdAndUpdate(
       req.params.id,
-      { rollno, webinarname, time, description, image: imagePath },
+      { rollno, webinarname, time, description, image: imagePath ,link},
       { new: true }
     );
 

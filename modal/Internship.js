@@ -6,7 +6,8 @@ const InternshipSchema = new mongoose.Schema({
   company: { type: String, required: true },
   duration: { type: String, required: true },
   image: { type: String, required: false },
-  rollno:{type:String,required:false}
+  rollno:{type:String,required:false},
+  link:{type:String,required:true}
 });
 
 module.exports = mongoose.model("Internship", InternshipSchema);
