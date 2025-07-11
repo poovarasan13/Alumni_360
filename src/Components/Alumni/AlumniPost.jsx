@@ -5,10 +5,11 @@ const AlumniPost = () => {
   const [posts, setPosts] = useState([]);
   const [postName, setPostName] = useState("");
   const [postDescription, setPostDescription] = useState("");
+  const [postLink, setPostLink] = useState("");
   const [postImage, setPostImage] = useState(null);
   const [editId, setEditId] = useState(null);
   const { alumniData } = useContext(AlumniContext);
-  const token = localStorage.getItem("token"); 
+  const token = localStorage.getItem("token");
   const rollno = alumniData?.rollno;
   const [authError, setAuthError] = useState(false);
 
@@ -20,7 +21,7 @@ const AlumniPost = () => {
 
     fetch(`http://localhost:9000/posts/list/${rollno}`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -32,7 +33,7 @@ const AlumniPost = () => {
       })
       .then((data) => setPosts(data))
       .catch((error) => console.error("Error fetching posts:", error));
-  }, [rollno, token]); 
+  }, [rollno, token]);
 
   const handleSubmitPost = async () => {
     if (!postName || !postDescription || (!editId && !postImage)) {
@@ -43,6 +44,7 @@ const AlumniPost = () => {
     const formData = new FormData();
     formData.append("rollno", rollno);
     formData.append("name", postName);
+    formData.append("link", postLink);
     formData.append("description", postDescription);
     if (postImage) formData.append("image", postImage);
 
@@ -56,7 +58,7 @@ const AlumniPost = () => {
         method,
         body: formData,
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
       const data = await response.json();
@@ -83,7 +85,7 @@ const AlumniPost = () => {
       const response = await fetch(`http://localhost:9000/posts/delete/${id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -102,6 +104,7 @@ const AlumniPost = () => {
     setPostName(post.name);
     setPostDescription(post.description);
     setEditId(post._id);
+    setPostLink(post.link || "");
     setPostImage(null);
   };
 
@@ -109,6 +112,7 @@ const AlumniPost = () => {
     setPostName("");
     setPostDescription("");
     setPostImage(null);
+    setPostLink("");
     setEditId(null);
     document.getElementById("closeModal").click();
   };
@@ -144,21 +148,35 @@ const AlumniPost = () => {
               <div className="card-body">
                 <h5 className="card-title">{post.name}</h5>
                 <p className="card-text">{post.description}</p>
-                <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEdit(post)}
-                  data-bs-toggle="modal"
-                  data-bs-target="#createPostModal"
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(post._id)}
-                >
-                  Delete
-                </button>
+
+                <div className="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                  {post.link && (
+                    <a
+                      href={post.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-info btn-sm"
+                    >
+                      View Course
+                    </a>
+                  )}
+                  <button
+                    className="btn btn-warning btn-sm"
+                    onClick={() => handleEdit(post)}
+                    data-bs-toggle="modal"
+                    data-bs-target="#createPostModal"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(post._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
+
             </div>
           </div>
         ))}
@@ -186,12 +204,21 @@ const AlumniPost = () => {
                 onChange={(e) => setPostDescription(e.target.value)}
               />
               <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Course Link"
+                value={postLink}
+                onChange={(e) => setPostLink(e.target.value)}
+              />
+
+              <input
                 type="file"
                 className="form-control mb-2"
                 accept="image/*"
                 onChange={(e) => setPostImage(e.target.files[0])}
               />
             </div>
+
             <div className="modal-footer">
               <button className="btn btn-primary btn-sm" onClick={handleSubmitPost}>
                 {editId ? "Update" : "Create"}

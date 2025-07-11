@@ -207,7 +207,7 @@ const AlumniInternship = () => {
       <div className="row">
         {internships.map((internship) => (
           <div className="col-md-4 mb-3" key={internship._id}>
-            <div className="card" style={{ width: "17rem" }}>
+            <div className="card" style={{ width: "21rem" }}>
               <img
                 src={`http://localhost:9000${internship.image}`}
                 className="card-img-top"

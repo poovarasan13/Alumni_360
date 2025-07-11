@@ -18,7 +18,7 @@ const Courses = ({ posts }) => {
         <div className="row justify-content-center">
             {posts.length > 0 ? (
                 posts.map((course, index) => (
-                    <div className="col-4" key={index}>
+                    <div className="col-3" key={index}>
                         <div className="card" style={{ width: "16rem" }}>
                             <div className="d-flex justify-content-center">
                                 <img 

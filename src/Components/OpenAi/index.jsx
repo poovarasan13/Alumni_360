@@ -28,9 +28,7 @@ export default function ChatComponent() {
 
       const response = await fetch("http://localhost:9000/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...chatLog, userMessage] }),
       });
 
@@ -42,7 +40,6 @@ export default function ChatComponent() {
       };
       setChatLog((prev) => [...prev, botMessage]);
     } catch (err) {
-      console.error("API error:", err);
       setChatLog((prev) => [
         ...prev,
         {
@@ -64,26 +61,19 @@ export default function ChatComponent() {
       : msg.content;
 
     return (
-      <div 
-        key={msg.id} 
-        className={`d-flex mb-3 ${isUser ? "justify-content-end" : "justify-content-start"}`}
-      >
-        <div 
-          className={`card ${isUser ? "bg-primary text-dark" : isDarkMode ? "bg-dark" : "bg-light"} shadow-sm`}
-          style={{ maxWidth: "80%", borderRadius: "15px" }}
-        >
+      <div key={msg.id} className={`d-flex mb-3 ${isUser ? "justify-content-end" : "justify-content-start"} fade-in`}>
+        <div className={`card ${isUser ? "bg-primary text-white" : isDarkMode ? "bg-secondary text-white" : "bg-white text-dark"} shadow rounded-4`} style={{ maxWidth: "75%", padding: "12px 18px", borderRadius: "20px" }}>
           <div className="card-body p-3">
             <div className="d-flex align-items-center mb-2">
-              <div className={`badge ${isUser ? "bg-light text-primary" : "bg-secondary"} me-2`}>
+              <img src={isUser ? "/user-avatar.png" : "/ai-avatar.png"} alt={isUser ? "User" : "AI"} className="rounded-circle me-2" style={{ width: "35px", height: "35px" }} />
+              <div className={`badge ${isUser ? "bg-light text-primary" : "bg-dark text-white"} me-2`}>
                 {isUser ? "You" : "AI"}
               </div>
-              <small className={isDarkMode ? "text-light" : "text-muted"}>
-                {new Date(msg.id).toLocaleTimeString()}
-              </small>
+              <small className={isDarkMode ? "text-light" : "text-muted"}>{new Date(msg.id).toLocaleTimeString()}</small>
             </div>
             <div className="card-text">
               {isCode ? (
-                <pre className={`${isDarkMode ? "bg-dark" : "bg-light"} text-dark p-3 rounded`} style={{ whiteSpace: "pre-wrap" }}>
+                <pre className={`${isDarkMode ? "bg-dark text-white" : "bg-light text-dark"} p-3 rounded`} style={{ whiteSpace: "pre-wrap" }}>
                   <code>{formattedContent.trim()}</code>
                 </pre>
               ) : (
@@ -97,11 +87,10 @@ export default function ChatComponent() {
   };
 
   return (
-    <div className={`d-flex flex-column vh-100 ${isDarkMode ? "bg-dark text-dark" : "bg-light"}`}>
+    <div className={`d-flex flex-column vh-100 ${isDarkMode ? "bg-dark text-light" : "bg-light text-dark"}`}>
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-      
-      <div className="flex-grow-1 overflow-auto p-4 mt-5 pt-5" style={{ backgroundColor: isDarkMode ? "#1a1a1a" : "#f8f9fa" }}>
-        <div className="container pt-5">
+      <div className="flex-grow-1 overflow-auto p-4 mt-5 pt-5" style={{ background: isDarkMode ? "linear-gradient(135deg, #1a1a1a, #2c2c2c)" : "linear-gradient(135deg, #f9f9f9, #e8e8e8)" }}>
+        <div className="container pt-5" style={{ maxWidth: "720px", margin: "auto" }}>
           {chatLog.length === 0 && (
             <div className="text-center mt-5">
               <div className="card bg-transparent border-0">
@@ -112,21 +101,14 @@ export default function ChatComponent() {
               </div>
             </div>
           )}
-          
           {chatLog.map(renderMessage)}
-          
           {loading && (
             <div className="d-flex justify-content-start mb-3">
-              <div className={`card ${isDarkMode ? "bg-dark" : "bg-light"} shadow-sm`} style={{ maxWidth: "80%", borderRadius: "15px" }}>
+              <div className={`card ${isDarkMode ? "bg-secondary" : "bg-light"} shadow-sm rounded-4`} style={{ maxWidth: "75%" }}>
                 <div className="card-body p-3">
-                  <div className="d-flex align-items-center mb-2">
-                    <div className="badge bg-secondary me-2">AI</div>
-                  </div>
-                  <div className="d-flex">
-                    <div className="spinner-border spinner-border-sm text-secondary me-2" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                    <p className="mb-0">Thinking...</p>
+                  <div className="d-flex align-items-center">
+                    <div className="spinner-grow text-secondary me-2" role="status" style={{ width: "1rem", height: "1rem" }} />
+                    <span className="text-muted">AI is thinking...</span>
                   </div>
                 </div>
               </div>
@@ -135,57 +117,44 @@ export default function ChatComponent() {
           <div ref={messagesEndRef} />
         </div>
       </div>
-
-      {/* Always visible input form */}
       <div className={`p-3 ${isDarkMode ? "bg-dark" : "bg-light"} border-top`}>
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-8 col-12">
-              <form onSubmit={handleSubmit}>
-                <div className="input-group">
+              <div className={`chat-input-wrapper ${isDarkMode ? "bg-dark" : "bg-white"} p-3 shadow rounded-3`}>
+                <form onSubmit={handleSubmit} className="d-flex">
                   <input
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     type="text"
-                    className={`form-control ${isDarkMode ? "bg-secondary text-dark border-dark" : ""}`}
-                    placeholder="Type your message..."
-                    aria-label="Type your message"
-                    aria-describedby="button-send"
+                    className="form-control flex-grow-1 me-2 rounded-pill"
+                    placeholder="Ask me anything..."
                     style={{
-                      height: "60px",
-                      borderRadius: "5px",
-                      boxShadow: "none",
-                      borderRight: "none"
+                      height: "50px",
+                      border: isDarkMode ? "1px solid #444" : "1px solid #ccc",
+                      background: isDarkMode ? "#2b2b2b" : "#fff",
+                      color: isDarkMode ? "#fff" : "#000",
                     }}
                   />
-                  <button
-                    className={`btn ${isDarkMode ? "btn-primary" : "btn-primary"} d-flex align-items-center`}
-                    style={{ height: "60px", borderRadius: "0 5px 5px 0" }}
-                    type="submit"
-                    disabled={loading}
-                    id="button-send"
-                  >
-                    {loading ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="me-2">
-                          <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-                        </svg>
-                        Send
-                      </>
-                    )}
+                  <button className="btn btn-primary rounded-pill px-4" type="submit" disabled={loading}>
+                    {loading ? "Sending..." : "Send"}
                   </button>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <style>{`
+        .fade-in {
+          animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

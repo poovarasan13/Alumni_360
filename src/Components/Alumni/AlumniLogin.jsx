@@ -153,7 +153,7 @@ const AlumniLogin = () => {
                           </div>
                         </div>
 
-                        {password.length > 0 && (
+                        {/* {password.length > 0 && (
                           <div className="row mt-2">
                             <div className="col ms-4">
                               <div className="text">
@@ -161,7 +161,7 @@ const AlumniLogin = () => {
                               </div>
                             </div>
                           </div>
-                        )}
+                        )} */}
 
                         <SButton name="Login" type='submit' color="color2" />
                       </form>

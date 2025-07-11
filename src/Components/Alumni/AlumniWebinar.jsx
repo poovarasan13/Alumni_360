@@ -7,10 +7,11 @@ const AlumniWebinar = () => {
   const [eventName, setEventName] = useState("");
   const [eventImage, setEventImage] = useState(null);
   const [eventTime, setEventTime] = useState("");
+  const [eventLink, setEventLink] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [editId, setEditId] = useState(null);
   const { alumniData } = useContext(AlumniContext);
-  const token  =localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const rollno = alumniData?.rollno;
   const [authError, setAuthError] = useState(false);
 
@@ -22,7 +23,7 @@ const AlumniWebinar = () => {
 
     fetch(`http://localhost:9000/webinars/list/${rollno}`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -34,7 +35,7 @@ const AlumniWebinar = () => {
       })
       .then((data) => setWebinarData(data))
       .catch((error) => console.error("Error fetching webinars:", error));
-  }, [rollno, token]);  
+  }, [rollno, token]);
 
   const handleSubmitWebinar = async () => {
     if (!eventName || !eventTime || !eventDescription || (!editId && !eventImage)) {
@@ -46,7 +47,9 @@ const AlumniWebinar = () => {
     formData.append("rollno", rollno);
     formData.append("webinarname", eventName);
     formData.append("time", eventTime);
-    formData.append("description", eventDescription);
+formData.append("description", eventDescription);
+formData.append("link", eventLink);
+
 
     if (eventImage) {
       formData.append("image", eventImage);
@@ -87,7 +90,7 @@ const AlumniWebinar = () => {
       const response = await fetch(`http://localhost:9000/webinars/delete/${id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -107,7 +110,9 @@ const AlumniWebinar = () => {
     setEventTime(webinar.time);
     setEventDescription(webinar.description);
     setEditId(webinar._id);
-    setEventImage(null); 
+    setEventImage(null);
+    setEventLink(webinar.link || ""); 
+
   };
 
   const resetForm = () => {
@@ -116,6 +121,7 @@ const AlumniWebinar = () => {
     setEventTime("");
     setEventDescription("");
     setEditId(null);
+    setEventLink("");
     document.getElementById("closeModal").click();
   };
 
@@ -199,6 +205,14 @@ const AlumniWebinar = () => {
                 value={eventDescription}
                 onChange={(e) => setEventDescription(e.target.value)}
               />
+              <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Event Link"
+                value={eventLink}
+                onChange={(e) => setEventLink(e.target.value)}
+              />
+
               <input
                 type="file"
                 className="form-control mb-2"
